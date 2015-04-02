@@ -1,7 +1,8 @@
 package com.hive.harvest.parse.expressions;
 
+import com.hive.harvest.parse.expressions.backtracking.HQLFromExpressionBacktrackRule;
 import com.hive.harvest.parse.expressions.backtracking.HQLIdentifierExpressionBacktrackRule;
-import com.hive.harvest.parse.expressions.backtracking.HQLKeywordExpressionBacktrackRule;
+import com.hive.harvest.parse.expressions.backtracking.HQLSelectStatementBacktrackRule;
 import com.hive.harvest.parse.expressions.backtracking.HQLUnknownExpressionBacktrackRule;
 import com.hive.harvest.parse.expressions.backtracking.interfaces.BacktrackRuleSet;
 import com.hive.harvest.parse.lexer.HQLLexer;
@@ -15,7 +16,8 @@ import java.util.List;
 public class HQLTreeRootExpression extends HQLExpression {
   private final BacktrackRuleSet rules = new BacktrackRuleSet()
     .add(new HQLIdentifierExpressionBacktrackRule())
-    .add(new HQLKeywordExpressionBacktrackRule())
+    .add(new HQLSelectStatementBacktrackRule())
+    .add(new HQLFromExpressionBacktrackRule())
     .add(new HQLUnknownExpressionBacktrackRule());
 
   private final List<HQLExpression> expressions;

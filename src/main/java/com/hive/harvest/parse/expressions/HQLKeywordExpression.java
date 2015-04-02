@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * Created by sircodesalot on 15/4/2.
  */
-public class HQLKeywordExpression extends HQLExpression {
+public abstract class HQLKeywordExpression extends HQLExpression {
   private static final Set<String> keywords = generateKeywordSet();
 
   public static final String SELECT = "SELECT";
@@ -30,11 +30,7 @@ public class HQLKeywordExpression extends HQLExpression {
       throw new HQLException("Keyword expressions must be keywords");
     }
 
-    return (HQLIdentifierToken)lexer.readCurrentAndAdvance(HQLIdentifierToken.class);
-  }
-
-  public static HQLExpression read(HQLExpression parent, HQLLexer lexer) {
-    return new HQLKeywordExpression(parent, lexer);
+    return (HQLIdentifierToken)lexer.current();
   }
 
   public static boolean isKeyword(HQLLexer lexer) {

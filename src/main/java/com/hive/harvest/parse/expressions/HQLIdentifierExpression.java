@@ -19,7 +19,7 @@ public class HQLIdentifierExpression extends HQLExpression {
 
   private HQLToken readIdentifier(HQLLexer lexer) {
     if (!lexer.currentIs(HQLIdentifierToken.class)) {
-      throw new HQLException("Identifiers must start with Identifier tokens.");
+      throw new HQLException("Identifiers must start with Identifier tokens. Found %s", lexer.current());
     }
 
     return lexer.readCurrentAndAdvance(HQLIdentifierToken.class);

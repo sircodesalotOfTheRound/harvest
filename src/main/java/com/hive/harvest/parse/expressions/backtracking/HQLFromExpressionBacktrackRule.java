@@ -1,7 +1,9 @@
 package com.hive.harvest.parse.expressions.backtracking;
 
 import com.hive.harvest.parse.expressions.HQLExpression;
+import com.hive.harvest.parse.expressions.HQLFromExpression;
 import com.hive.harvest.parse.expressions.HQLKeywordExpression;
+import com.hive.harvest.parse.expressions.HQLSelectStatement;
 import com.hive.harvest.parse.expressions.backtracking.interfaces.HQLBacktrackRuleBase;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLIdentifierToken;
@@ -9,16 +11,16 @@ import com.hive.harvest.parse.tokens.HQLIdentifierToken;
 /**
  * Created by sircodesalot on 15/4/2.
  */
-public class HQLKeywordExpressionBacktrackRule extends HQLBacktrackRuleBase<HQLIdentifierToken> {
-  public HQLKeywordExpressionBacktrackRule() {
+public class HQLFromExpressionBacktrackRule extends HQLBacktrackRuleBase<HQLIdentifierToken> {
+  public HQLFromExpressionBacktrackRule() {
     super(HQLIdentifierToken.class);
   }
 
   public boolean isMatch(HQLExpression parent, HQLLexer lexer) {
-    return HQLKeywordExpression.isKeyword(lexer);
+    return lexer.currentIs(HQLIdentifierToken.class, HQLKeywordExpression.FROM);
   }
 
   public HQLExpression read(HQLExpression parent, HQLLexer lexer) {
-    return HQLKeywordExpression.read(parent, lexer);
+    return HQLFromExpression.read(parent, lexer);
   }
 }

@@ -29,8 +29,11 @@ public class HQLLexer {
 
   public void advance() {
     currentIndex += 1;
-    while (!isEof() && currentIs(HQLWhitespaceToken.class)) {
-      currentIndex += 1;
+
+    if (advancePastWhitespace) {
+      while (!isEof() && currentIs(HQLWhitespaceToken.class)) {
+        currentIndex += 1;
+      }
     }
   }
 

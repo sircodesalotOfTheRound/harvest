@@ -25,7 +25,7 @@ public class BacktrackRuleSet {
 
     // Wire the rule up to all of it's interfaces.
     for (Class iface : hierarchy.flattenedHierarchy()) {
-      rules.add(rule.launchForTokensOfType(), rule);
+      rules.add(iface, rule);
     }
 
     return this;
@@ -38,10 +38,17 @@ public class BacktrackRuleSet {
 
     HQLToken current = lexer.current();
     Class type = current.getClass();
+
+    HQLExpression result = null;
     if (rules.containsKey(type)) {
-       return this.findMatch(type, parent, lexer);
+      result = this.findMatch(type, parent, lexer);
+    }
+
+    // If nothing is found, then try
+    if (result != null) {
+      return result;
     } else {
-      return this.findMatch(type, parent, lexer);
+      return this.findMatch(Object.class, parent, lexer);
     }
   }
 
