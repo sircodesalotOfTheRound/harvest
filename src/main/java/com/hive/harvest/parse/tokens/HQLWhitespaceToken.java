@@ -5,7 +5,7 @@ import com.hive.harvest.parse.lexer.HQLCharacterStream;
 /**
  * Created by sircodesalot on 15/4/2.
  */
-public class HQLWhitespaceToken implements HQLTokenBase {
+public class HQLWhitespaceToken implements HQLToken {
   private char whitespaceCharacter;
   private final int length;
 

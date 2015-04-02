@@ -4,7 +4,6 @@ import com.hive.harvest.parse.lexer.HQLTokenList;
 import com.hive.harvest.parse.tokens.*;
 import org.junit.Test;
 
-import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,7 +16,7 @@ public class TestHQLTokenList {
     Map<Class, Integer> tokensCounts = new HashMap<Class, Integer>();
     HQLTokenList tokens = new HQLTokenList("select 1, second.third from table1, where name = 'smith'");
 
-    for (HQLTokenBase token : tokens) {
+    for (HQLToken token : tokens) {
       Class tokenType = token.getClass();
       if (tokensCounts.containsKey(token.getClass())) {
         int seenTimes = tokensCounts.get(tokenType);

@@ -5,7 +5,7 @@ import com.hive.harvest.parse.lexer.HQLCharacterStream;
 /**
  * In theory, this class should never be used.
  */
-public class HQLMysteryToken implements HQLTokenBase {
+public class HQLMysteryToken implements HQLToken {
   private final char character;
 
   private HQLMysteryToken(HQLCharacterStream stream) {

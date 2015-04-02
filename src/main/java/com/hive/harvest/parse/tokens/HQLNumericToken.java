@@ -7,7 +7,7 @@ import java.math.BigInteger;
 /**
  * Created by sircodesalot on 15/4/2.
  */
-public class HQLNumericToken implements HQLTokenBase {
+public class HQLNumericToken implements HQLToken {
   private BigInteger value;
 
   private HQLNumericToken(HQLCharacterStream stream) {

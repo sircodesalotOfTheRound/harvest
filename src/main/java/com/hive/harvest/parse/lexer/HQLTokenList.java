@@ -9,26 +9,26 @@ import java.util.List;
 /**
  * Created by sircodesalot on 15/4/2.
  */
-public class HQLTokenList implements Iterable<HQLTokenBase> {
-  private final List<HQLTokenBase> tokens;
+public class HQLTokenList implements Iterable<HQLToken> {
+  private final List<HQLToken> tokens;
 
   public HQLTokenList(String statement) {
     this.tokens = generateFromString(statement);
   }
 
-  private List<HQLTokenBase> generateFromString(String text) {
+  private List<HQLToken> generateFromString(String text) {
     HQLCharacterStream stream = new HQLCharacterStream(text);
-    List<HQLTokenBase> tokens = new ArrayList<HQLTokenBase>();
+    List<HQLToken> tokens = new ArrayList<HQLToken>();
 
     while (!stream.isEof()) {
-      HQLTokenBase token = readToken(stream);
+      HQLToken token = readToken(stream);
       tokens.add(token);
     }
 
     return tokens;
   }
 
-  private HQLTokenBase readToken(HQLCharacterStream stream) {
+  private HQLToken readToken(HQLCharacterStream stream) {
     if (stream.currentIsAlpha()) {
       return HQLIdentifierToken.read(stream);
     } else if (stream.currentIsPunctuation()) {
@@ -45,15 +45,19 @@ public class HQLTokenList implements Iterable<HQLTokenBase> {
     }
   }
 
-  public Iterable<HQLTokenBase> tokens() {
+  public Iterable<HQLToken> tokens() {
     return this.tokens;
   }
 
-  public Iterator<HQLTokenBase> iterator() {
+  public Iterator<HQLToken> iterator() {
     return tokens.iterator();
   }
 
   public int size() {
     return tokens.size();
+  }
+
+  public HQLToken get(int index) {
+    return tokens.get(index);
   }
 }

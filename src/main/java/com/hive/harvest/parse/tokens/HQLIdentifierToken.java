@@ -6,7 +6,7 @@ import com.hive.harvest.parse.lexer.HQLCharacterStream;
 /**
  * Created by sircodesalot on 15/4/2.
  */
-public class HQLIdentifierToken implements HQLTokenBase {
+public class HQLIdentifierToken implements HQLToken {
   private final String identifier;
 
   private HQLIdentifierToken(HQLCharacterStream stream) {

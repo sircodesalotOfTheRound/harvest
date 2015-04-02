@@ -5,7 +5,7 @@ import com.hive.harvest.parse.lexer.HQLCharacterStream;
 /**
  * Created by sircodesalot on 15/4/2.
  */
-public class HQLPunctuationToken implements HQLTokenBase {
+public class HQLPunctuationToken implements HQLToken {
   private final String token;
 
   private HQLPunctuationToken(HQLCharacterStream stream) {
