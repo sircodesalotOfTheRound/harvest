@@ -38,7 +38,7 @@ public class HQLLexer {
     return this.tokens.get(currentIndex);
   }
 
-  public HQLToken readCurrentAndAdvanceMatchCase() {
+  public HQLToken readCurrentAndAdvance() {
     HQLToken current = this.current();
     this.advance();
 
@@ -47,7 +47,7 @@ public class HQLLexer {
 
   public <T extends HQLToken> HQLToken readCurrentAndAdvance(Class<T> type) {
     if (currentIs(type)) {
-      return readCurrentAndAdvanceMatchCase();
+      return readCurrentAndAdvance();
     } else {
       throw new HQLException("Expected %s, found %s", type, this.current().getClass());
     }
@@ -55,7 +55,7 @@ public class HQLLexer {
 
   public <T extends HQLToken> HQLToken readCurrentAndAdvanceMatchCase(Class<T> type, String representation) {
     if (currentIsMatchCase(type, representation)) {
-      return readCurrentAndAdvanceMatchCase();
+      return readCurrentAndAdvance();
     } else {
       throw new HQLException("Expected (%s : %s), found (%s : %s)",
         representation, type,
@@ -65,7 +65,7 @@ public class HQLLexer {
 
   public <T extends HQLToken> HQLToken readCurrentAndAdvance(Class<T> type, String representation) {
     if (currentIs(type, representation)) {
-      return readCurrentAndAdvanceMatchCase();
+      return readCurrentAndAdvance();
     } else {
       throw new HQLException("Expected (%s : %s), found (%s : %s)",
         representation, type,

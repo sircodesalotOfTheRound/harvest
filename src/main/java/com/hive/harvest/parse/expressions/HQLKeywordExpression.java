@@ -1,6 +1,8 @@
 package com.hive.harvest.parse.expressions;
 
+import com.hive.harvest.exceptions.HQLException;
 import com.hive.harvest.parse.lexer.HQLLexer;
+import com.hive.harvest.parse.tokens.HQLIdentifierToken;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -8,15 +10,27 @@ import java.util.Set;
 /**
  * Created by sircodesalot on 15/4/2.
  */
-public class HQLKeywordExpression implements HQLExpression {
+public class HQLKeywordExpression extends HQLExpression {
   private static final Set<String> keywords = generateKeywordSet();
 
   public static final String SELECT = "SELECT";
   public static final String FROM = "FROM";
   public static final String WHERE = "WHERE";
 
-  public HQLKeywordExpression(HQLExpression parent, HQLLexer lexer) {
+  private final HQLIdentifierToken token;
 
+  public HQLKeywordExpression(HQLExpression parent, HQLLexer lexer) {
+    super(parent, lexer);
+
+    this.token = readToken(lexer);
+  }
+
+  private HQLIdentifierToken readToken(HQLLexer lexer) {
+    if (!isKeyword(lexer)) {
+      throw new HQLException("Keyword expressions must be keywords");
+    }
+
+    return (HQLIdentifierToken)lexer.readCurrentAndAdvance(HQLIdentifierToken.class);
   }
 
   public static HQLExpression read(HQLExpression parent, HQLLexer lexer) {
@@ -28,7 +42,7 @@ public class HQLKeywordExpression implements HQLExpression {
   }
 
   public static boolean isKeyword(String identifier) {
-    return keywords.contains(identifier);
+    return keywords.contains(identifier.toUpperCase());
   }
 
   private static Set<String> generateKeywordSet() {

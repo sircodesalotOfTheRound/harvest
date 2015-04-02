@@ -4,20 +4,30 @@ import com.hive.harvest.exceptions.HQLException;
 import com.hive.harvest.parse.expressions.HQLExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLToken;
+import com.hive.harvest.tools.ClassHierarchyFlattener;
 import com.hive.harvest.tools.OneToManyMap;
 
 /**
  * Created by sircodesalot on 15/4/2.
  */
 public class BacktrackRuleSet {
-  private final OneToManyMap<Class, BacktrackRule> rules;
+  private final OneToManyMap<Class, HQLBacktrackRule> rules;
 
   public BacktrackRuleSet() {
-    this.rules = new OneToManyMap<Class, BacktrackRule>();
+    this.rules = new OneToManyMap<Class, HQLBacktrackRule>();
   }
 
-  public BacktrackRuleSet add(BacktrackRule rule) {
-    rules.add(rule.launchForTokensOfType(), rule);
+  public BacktrackRuleSet add(HQLBacktrackRule rule) {
+    // Ensure that we launch this rule for polymorphic derivations of the token type.
+    // For example, two tokens may share the same base class. So a backtrack rule may
+    // choose to listen for that.
+    ClassHierarchyFlattener hierarchy = new ClassHierarchyFlattener(rule.launchForTokensOfType());
+
+    // Wire the rule up to all of it's interfaces.
+    for (Class iface : hierarchy.flattenedHierarchy()) {
+      rules.add(rule.launchForTokensOfType(), rule);
+    }
+
     return this;
   }
 
@@ -29,10 +39,20 @@ public class BacktrackRuleSet {
     HQLToken current = lexer.current();
     Class type = current.getClass();
     if (rules.containsKey(type)) {
-      for (BacktrackRule rule : this.rules.get(type)) {
-        if (rule.isMatch(parent, lexer)) {
-          return rule.read(parent, lexer);
-        }
+       return this.findMatch(type, parent, lexer);
+    } else {
+      return this.findMatch(type, parent, lexer);
+    }
+  }
+
+  private HQLExpression findMatch (Class type, HQLExpression parent, HQLLexer lexer) {
+    if (!rules.containsKey(type)) {
+      return null;
+    }
+
+    for (HQLBacktrackRule rule : this.rules.get(type)) {
+      if (rule.isMatch(parent, lexer)) {
+        return rule.read(parent, lexer);
       }
     }
 

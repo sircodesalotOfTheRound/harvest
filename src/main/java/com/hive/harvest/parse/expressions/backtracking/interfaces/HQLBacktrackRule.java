@@ -7,7 +7,7 @@ package com.hive.harvest.parse.expressions.backtracking.interfaces;
 import com.hive.harvest.parse.expressions.HQLExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 
-public interface BacktrackRule {
+public interface HQLBacktrackRule {
   Class launchForTokensOfType();
 
   boolean isMatch(HQLExpression parent, HQLLexer lexer);

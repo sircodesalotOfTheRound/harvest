@@ -1,13 +1,32 @@
 package com.hive.harvest.parse.expressions;
 
+import com.hive.harvest.exceptions.HQLException;
 import com.hive.harvest.parse.lexer.HQLLexer;
+import com.hive.harvest.parse.tokens.HQLIdentifierToken;
+import com.hive.harvest.parse.tokens.HQLToken;
 
 /**
  * Created by sircodesalot on 15/4/2.
  */
-public class HQLIdentifierExpression implements HQLExpression {
-  public HQLIdentifierExpression(HQLExpression parent, HQLLexer lexer) {
+public class HQLIdentifierExpression extends HQLExpression {
+  private final HQLToken identifier;
 
+  public HQLIdentifierExpression(HQLExpression parent, HQLLexer lexer) {
+    super(parent, lexer);
+
+    this.identifier = readIdentifier(lexer);
+  }
+
+  private HQLToken readIdentifier(HQLLexer lexer) {
+    if (!lexer.currentIs(HQLIdentifierToken.class)) {
+      throw new HQLException("Identifiers must start with Identifier tokens.");
+    }
+
+    return lexer.readCurrentAndAdvance(HQLIdentifierToken.class);
+  }
+
+  public String identifier() {
+    return identifier.toString();
   }
 
   public static HQLExpression read(HQLExpression parent, HQLLexer lexer) {
