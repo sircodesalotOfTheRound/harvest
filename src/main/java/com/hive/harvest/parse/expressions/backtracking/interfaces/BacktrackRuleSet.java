@@ -2,9 +2,7 @@ package com.hive.harvest.parse.expressions.backtracking.interfaces;
 
 import com.hive.harvest.exceptions.HQLException;
 import com.hive.harvest.parse.expressions.HQLExpression;
-import com.hive.harvest.parse.expressions.HQLUnknownExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
-import com.hive.harvest.parse.tokens.HQLToken;
 import com.hive.harvest.tools.ClassHierarchyFlattener;
 import com.hive.harvest.tools.OneToManyMap;
 

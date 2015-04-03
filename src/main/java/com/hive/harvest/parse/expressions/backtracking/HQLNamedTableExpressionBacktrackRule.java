@@ -2,6 +2,8 @@ package com.hive.harvest.parse.expressions.backtracking;
 
 import com.hive.harvest.parse.expressions.*;
 import com.hive.harvest.parse.expressions.backtracking.interfaces.HQLBacktrackRuleBase;
+import com.hive.harvest.parse.expressions.keywords.HQLKeywordExpression;
+import com.hive.harvest.parse.expressions.tables.HQLNamedTableExpression;
 import com.hive.harvest.parse.expressions.tables.HQLTableSetExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLIdentifierToken;

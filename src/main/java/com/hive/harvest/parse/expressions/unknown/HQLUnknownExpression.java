@@ -1,6 +1,7 @@
-package com.hive.harvest.parse.expressions;
+package com.hive.harvest.parse.expressions.unknown;
 
 import com.hive.harvest.graph.HQLNoReturnVisitor;
+import com.hive.harvest.parse.expressions.HQLExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLToken;
 

@@ -2,15 +2,13 @@ package com.hive.harvest.parse.expressions.columns;
 
 import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.expressions.HQLExpression;
-import com.hive.harvest.parse.expressions.HQLIdentifierExpression;
-import com.hive.harvest.parse.expressions.HQLKeywordExpression;
+import com.hive.harvest.parse.expressions.keywords.HQLKeywordExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLIdentifierToken;
 import com.hive.harvest.parse.tokens.HQLPunctuationToken;
 import com.hive.harvest.tools.HQLCollectionExpression;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 

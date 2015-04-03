@@ -3,15 +3,14 @@ package com.hive.harvest.parse.expressions.tables;
 import com.hive.harvest.exceptions.HQLException;
 import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.expressions.HQLExpression;
-import com.hive.harvest.parse.expressions.HQLFromExpression;
-import com.hive.harvest.parse.expressions.HQLKeywordExpression;
+import com.hive.harvest.parse.expressions.keywords.statements.HQLFromExpression;
+import com.hive.harvest.parse.expressions.keywords.HQLKeywordExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLIdentifierToken;
 import com.hive.harvest.parse.tokens.HQLPunctuationToken;
 import com.hive.harvest.tools.HQLCollectionExpression;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**

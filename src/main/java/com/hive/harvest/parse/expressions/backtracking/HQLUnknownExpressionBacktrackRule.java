@@ -1,7 +1,7 @@
 package com.hive.harvest.parse.expressions.backtracking;
 
 import com.hive.harvest.parse.expressions.HQLExpression;
-import com.hive.harvest.parse.expressions.HQLUnknownExpression;
+import com.hive.harvest.parse.expressions.unknown.HQLUnknownExpression;
 import com.hive.harvest.parse.expressions.backtracking.interfaces.HQLBacktrackRule;
 import com.hive.harvest.parse.lexer.HQLLexer;
 

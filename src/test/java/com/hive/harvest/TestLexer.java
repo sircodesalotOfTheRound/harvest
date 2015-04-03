@@ -1,6 +1,6 @@
 package com.hive.harvest;
 
-import com.hive.harvest.parse.expressions.HQLKeywordExpression;
+import com.hive.harvest.parse.expressions.keywords.HQLKeywordExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLIdentifierToken;
 import com.hive.harvest.parse.tokens.HQLNumericToken;

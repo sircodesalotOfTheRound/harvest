@@ -1,20 +1,14 @@
 package com.hive.harvest;
 
-import com.hive.harvest.exceptions.HQLException;
-import com.hive.harvest.parse.expressions.HQLExpression;
-import com.hive.harvest.parse.expressions.HQLIdentifierExpression;
-import com.hive.harvest.parse.expressions.HQLNamedTableExpression;
-import com.hive.harvest.parse.expressions.columns.HQLColumnExpression;
+import com.hive.harvest.parse.expressions.tables.HQLNamedTableExpression;
 import com.hive.harvest.parse.expressions.columns.HQLNamedColumnExpression;
 import com.hive.harvest.parse.expressions.columns.HQLWildcardColumnExpression;
-import com.hive.harvest.parse.expressions.statements.HQLSelectStatement;
-import com.hive.harvest.parse.expressions.HQLTreeRootExpression;
-import com.hive.harvest.parse.expressions.tables.HQLTableExpression;
+import com.hive.harvest.parse.expressions.keywords.statements.HQLSelectStatement;
+import com.hive.harvest.parse.expressions.root.HQLTreeRootExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import org.junit.Test;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 import java.util.function.Predicate;
 

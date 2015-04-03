@@ -1,12 +1,10 @@
-package com.hive.harvest.parse.expressions.statements;
+package com.hive.harvest.parse.expressions.keywords.statements;
 
 import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.expressions.HQLExpression;
-import com.hive.harvest.parse.expressions.HQLFromExpression;
-import com.hive.harvest.parse.expressions.HQLKeywordExpression;
+import com.hive.harvest.parse.expressions.keywords.HQLKeywordExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.expressions.columns.HQLColumnSetExpression;
-import com.hive.harvest.parse.expressions.tables.HQLTableSetExpression;
 
 /**
  * Created by sircodesalot on 15/4/2.

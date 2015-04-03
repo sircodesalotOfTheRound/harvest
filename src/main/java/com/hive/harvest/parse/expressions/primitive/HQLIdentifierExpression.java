@@ -1,7 +1,8 @@
-package com.hive.harvest.parse.expressions;
+package com.hive.harvest.parse.expressions.primitive;
 
 import com.hive.harvest.exceptions.HQLException;
 import com.hive.harvest.graph.HQLNoReturnVisitor;
+import com.hive.harvest.parse.expressions.HQLExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLIdentifierToken;
 import com.hive.harvest.parse.tokens.HQLToken;

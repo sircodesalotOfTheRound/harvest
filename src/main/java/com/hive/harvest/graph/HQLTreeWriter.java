@@ -4,8 +4,13 @@ import com.hive.harvest.parse.expressions.*;
 import com.hive.harvest.parse.expressions.columns.HQLColumnSetExpression;
 import com.hive.harvest.parse.expressions.columns.HQLNamedColumnExpression;
 import com.hive.harvest.parse.expressions.columns.HQLWildcardColumnExpression;
-import com.hive.harvest.parse.expressions.statements.HQLSelectStatement;
+import com.hive.harvest.parse.expressions.keywords.statements.HQLFromExpression;
+import com.hive.harvest.parse.expressions.keywords.statements.HQLSelectStatement;
+import com.hive.harvest.parse.expressions.primitive.HQLIdentifierExpression;
+import com.hive.harvest.parse.expressions.root.HQLTreeRootExpression;
+import com.hive.harvest.parse.expressions.tables.HQLNamedTableExpression;
 import com.hive.harvest.parse.expressions.tables.HQLTableSetExpression;
+import com.hive.harvest.parse.expressions.unknown.HQLUnknownExpression;
 
 /**
  * Created by sircodesalot on 15/4/3.
@@ -14,11 +19,17 @@ public class HQLTreeWriter extends HQLNoReturnVisitor {
   private int indent;
   private StringBuilder builder;
 
-  public HQLTreeWriter(HQLExpression expression) {
-    this.builder = new StringBuilder();
+  public HQLTreeWriter(String command, HQLExpression expression) {
+    this.builder = createStringBuilder(command);
     this.indent = 0;
 
     this.accept(expression);
+  }
+
+  private StringBuilder createStringBuilder(String command) {
+    StringBuilder builder = new StringBuilder();
+    builder.append(command).append("\n").append("\n");
+    return builder;
   }
 
   private void increateIndent() {
