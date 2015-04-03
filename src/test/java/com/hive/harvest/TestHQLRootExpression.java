@@ -1,6 +1,7 @@
 package com.hive.harvest;
 
 import com.hive.harvest.parse.expressions.*;
+import com.hive.harvest.parse.expressions.statements.HQLSelectStatement;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import org.junit.Test;
 

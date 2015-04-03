@@ -28,6 +28,10 @@ public class HQLLexer {
   }
 
   public void advance() {
+    if (isEof()) {
+      throw new HQLException("Attempt to advance past end of file");
+    }
+
     currentIndex += 1;
 
     if (advancePastWhitespace) {

@@ -1,9 +1,12 @@
-package com.hive.harvest.parse.expressions;
+package com.hive.harvest.parse.expressions.statements;
 
+import com.hive.harvest.parse.expressions.HQLExpression;
+import com.hive.harvest.parse.expressions.HQLIdentifierExpression;
+import com.hive.harvest.parse.expressions.HQLKeywordExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLIdentifierToken;
 import com.hive.harvest.parse.tokens.HQLPunctuationToken;
-import com.hive.harvest.tools.collections.HQLColumnSet;
+import com.hive.harvest.parse.expressions.columns.HQLColumnSetExpression;
 import com.hive.harvest.tools.collections.HQLTableSet;
 
 import java.util.ArrayList;
@@ -13,7 +16,7 @@ import java.util.List;
  * Created by sircodesalot on 15/4/2.
  */
 public class HQLSelectStatement extends HQLKeywordExpression {
-  private final HQLColumnSet columns;
+  private final HQLColumnSetExpression columns;
   private final HQLTableSet tables;
 
   public HQLSelectStatement(HQLExpression parent, HQLLexer lexer) {
@@ -21,6 +24,10 @@ public class HQLSelectStatement extends HQLKeywordExpression {
 
     this.columns = readColumns(lexer);
     this.tables = readTables(lexer);
+  }
+
+  private HQLColumnSetExpression readColumns(HQLLexer lexer) {
+    return HQLColumnSetExpression.read(this, lexer);
   }
 
   private HQLTableSet readTables(HQLLexer lexer) {
@@ -50,35 +57,7 @@ public class HQLSelectStatement extends HQLKeywordExpression {
     return new HQLTableSet(tables);
   }
 
-  private HQLColumnSet readColumns(HQLLexer lexer) {
-    lexer.readCurrentAndAdvance(HQLIdentifierToken.class, HQLKeywordExpression.SELECT);
-    List<HQLExpression> columns = new ArrayList<HQLExpression>();
-
-    while (!lexer.isEof()) {
-      // Read the next token. If the token is a keyword, then drop out.
-      if (lexer.currentIs(HQLIdentifierToken.class)) {
-        if (!HQLKeywordExpression.isKeyword(lexer)) {
-          columns.add(HQLIdentifierExpression.read(this, lexer));
-        } else {
-          break;
-        }
-
-      } else if (lexer.currentIs(HQLPunctuationToken.class, HQLWildcardExpression.WILDCARD)) {
-        columns.add(HQLWildcardExpression.read(this, lexer));
-      }
-
-      // If the following isn't a comma, then drop out.
-      if (!lexer.isEof() && lexer.currentIs(HQLPunctuationToken.class, ",")) {
-        lexer.readCurrentAndAdvance(HQLPunctuationToken.class);
-      } else {
-        break;
-      }
-    }
-
-    return new HQLColumnSet(columns);
-  }
-
-  public HQLColumnSet columns() {
+  public HQLColumnSetExpression columns() {
     return this.columns;
   }
 

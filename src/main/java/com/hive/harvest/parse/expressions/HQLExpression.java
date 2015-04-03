@@ -15,4 +15,8 @@ public abstract class HQLExpression {
   public HQLExpression parent() {
     return this.parent;
   }
+
+  public <T> boolean parentIs(Class<T> type) {
+    return type.isAssignableFrom(this.getClass());
+  }
 }

@@ -1,7 +1,5 @@
 package com.hive.harvest.parse.expressions;
 
-import com.hive.harvest.parse.expressions.backtracking.HQLFromExpressionBacktrackRule;
-import com.hive.harvest.parse.expressions.backtracking.HQLIdentifierExpressionBacktrackRule;
 import com.hive.harvest.parse.expressions.backtracking.HQLSelectStatementBacktrackRule;
 import com.hive.harvest.parse.expressions.backtracking.HQLUnknownExpressionBacktrackRule;
 import com.hive.harvest.parse.expressions.backtracking.interfaces.BacktrackRuleSet;
@@ -14,10 +12,8 @@ import java.util.List;
  * Created by sircodesalot on 15/4/2.
  */
 public class HQLTreeRootExpression extends HQLExpression {
-  private final BacktrackRuleSet rules = new BacktrackRuleSet()
-    .add(new HQLIdentifierExpressionBacktrackRule())
+  private static final BacktrackRuleSet<HQLExpression> rules = new BacktrackRuleSet<HQLExpression>()
     .add(new HQLSelectStatementBacktrackRule())
-    .add(new HQLFromExpressionBacktrackRule())
     .add(new HQLUnknownExpressionBacktrackRule());
 
   private final List<HQLExpression> expressions;
@@ -32,7 +28,6 @@ public class HQLTreeRootExpression extends HQLExpression {
     List<HQLExpression> expressions = new ArrayList<HQLExpression>();
     while (!lexer.isEof()) {
       HQLExpression expression = rules.read(this, lexer);
-
       expressions.add(expression);
     }
 
