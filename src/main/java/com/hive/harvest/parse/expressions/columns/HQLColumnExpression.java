@@ -1,5 +1,6 @@
 package com.hive.harvest.parse.expressions.columns;
 
+import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.expressions.HQLExpression;
 import com.hive.harvest.parse.expressions.backtracking.HQLNamedColumnExpressionBacktrackRule;
 import com.hive.harvest.parse.expressions.backtracking.HQLWildcardColumnExpressionBacktrackRule;

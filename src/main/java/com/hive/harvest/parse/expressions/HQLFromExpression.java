@@ -1,5 +1,6 @@
 package com.hive.harvest.parse.expressions;
 
+import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.expressions.tables.HQLTableExpression;
 import com.hive.harvest.parse.expressions.tables.HQLTableSetExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
@@ -18,6 +19,11 @@ public class HQLFromExpression extends HQLKeywordExpression {
     this.tables = readTables(lexer);
   }
 
+  @Override
+  public void accept(HQLNoReturnVisitor visitor) {
+    visitor.visit(this);
+  }
+
   private HQLTableSetExpression readTables(HQLLexer lexer) {
     lexer.readCurrentAndAdvance(HQLIdentifierToken.class, HQLKeywordExpression.FROM);
     return HQLTableSetExpression.read(this, lexer);
@@ -33,5 +39,10 @@ public class HQLFromExpression extends HQLKeywordExpression {
 
   public HQLCollectionExpression<HQLTableExpression> tables() {
     return this.tables;
+  }
+
+  @Override
+  public String toString() {
+    return HQLKeywordExpression.FROM;
   }
 }

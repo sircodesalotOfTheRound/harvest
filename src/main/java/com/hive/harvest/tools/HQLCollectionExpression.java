@@ -1,5 +1,6 @@
 package com.hive.harvest.tools;
 
+import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.expressions.HQLExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 
@@ -26,10 +27,20 @@ public abstract class HQLCollectionExpression<T> extends HQLExpression implement
     protected Iterable<T> contents() {
       return this.contents;
     }
+
+    @Override
+    public void accept(HQLNoReturnVisitor visitor) {
+
+    }
   }
 
   public HQLCollectionExpression(HQLExpression parent, HQLLexer lexer) {
     super(parent, lexer);
+  }
+
+  @Override
+  public void accept(HQLNoReturnVisitor visitor) {
+
   }
 
   protected abstract Iterable<T> contents();

@@ -1,5 +1,6 @@
 package com.hive.harvest.parse.expressions;
 
+import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.lexer.HQLLexer;
 
 /**
@@ -25,4 +26,6 @@ public abstract class HQLExpression {
   public <T> boolean parentIs(Class<T> type) {
     return (parent != null) && type.isAssignableFrom(this.getClass());
   }
+
+  public abstract void accept(HQLNoReturnVisitor visitor);
 }

@@ -19,7 +19,9 @@ public class HQLIdentifierToken implements HQLToken {
     }
 
     StringBuilder builder = new StringBuilder();
-    while (!stream.isEof() && stream.currentIsAlphaNumeric()) {
+    while (!stream.isEof()
+      && (stream.currentIsAlphaNumeric() || stream.currentIs('_')))
+    {
       builder.append(stream.readCurrentAndAdvance());
     }
 

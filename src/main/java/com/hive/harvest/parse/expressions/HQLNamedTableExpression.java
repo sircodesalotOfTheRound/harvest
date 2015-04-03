@@ -1,6 +1,7 @@
 package com.hive.harvest.parse.expressions;
 
 import com.hive.harvest.exceptions.HQLException;
+import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.expressions.tables.HQLTableExpression;
 import com.hive.harvest.parse.expressions.tables.HQLTableSetExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
@@ -17,6 +18,11 @@ public class HQLNamedTableExpression extends HQLTableExpression {
 
     this.validateLexing(parent, lexer);
     this.identifier = readIdentifier(lexer);
+  }
+
+  @Override
+  public void accept(HQLNoReturnVisitor visitor) {
+    visitor.visit(this);
   }
 
   private void validateLexing(HQLExpression parent, HQLLexer lexer) {
@@ -37,5 +43,10 @@ public class HQLNamedTableExpression extends HQLTableExpression {
 
   public String identifier() {
     return identifier.identifier();
+  }
+
+  @Override
+  public String toString() {
+    return String.format("[%s]", this.identifier());
   }
 }

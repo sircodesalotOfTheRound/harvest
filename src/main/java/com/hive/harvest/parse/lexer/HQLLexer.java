@@ -11,14 +11,14 @@ import java.util.Stack;
  */
 public class HQLLexer {
   private final String text;
-  private final boolean advancePastWhitespace;
+  private final boolean skipWhitespaces;
   private final HQLTokenList tokens;
   private int currentIndex;
   private Stack<Integer> undoStack;
 
-  public HQLLexer(String text, boolean advancePastWhitespace) {
+  public HQLLexer(String text, boolean skipWhitespaces) {
     this.text = text;
-    this.advancePastWhitespace = advancePastWhitespace;
+    this.skipWhitespaces = skipWhitespaces;
     this.tokens = new HQLTokenList(text);
     this.undoStack = new Stack<Integer>();
   }
@@ -34,7 +34,7 @@ public class HQLLexer {
 
     currentIndex += 1;
 
-    if (advancePastWhitespace) {
+    if (skipWhitespaces) {
       while (!isEof() && currentIs(HQLWhitespaceToken.class)) {
         currentIndex += 1;
       }

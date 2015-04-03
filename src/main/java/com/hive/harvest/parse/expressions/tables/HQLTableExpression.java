@@ -1,5 +1,6 @@
 package com.hive.harvest.parse.expressions.tables;
 
+import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.expressions.HQLExpression;
 import com.hive.harvest.parse.expressions.backtracking.HQLNamedTableExpressionBacktrackRule;
 import com.hive.harvest.parse.expressions.backtracking.interfaces.BacktrackRuleSet;

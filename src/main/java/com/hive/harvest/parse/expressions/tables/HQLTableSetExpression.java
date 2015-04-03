@@ -1,6 +1,7 @@
 package com.hive.harvest.parse.expressions.tables;
 
 import com.hive.harvest.exceptions.HQLException;
+import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.expressions.HQLExpression;
 import com.hive.harvest.parse.expressions.HQLFromExpression;
 import com.hive.harvest.parse.expressions.HQLKeywordExpression;
@@ -17,13 +18,18 @@ import java.util.List;
  * Created by sircodesalot on 15/4/2.
  */
 public class HQLTableSetExpression extends HQLCollectionExpression<HQLTableExpression> {
-  private final List<HQLTableExpression> tables;
+  private final HQLCollectionExpression<HQLTableExpression> tables;
 
   public HQLTableSetExpression(HQLExpression parent, HQLLexer lexer) {
     super(parent, lexer);
 
     //this.validateLexing(parent, lexer);
     this.tables = readTables(lexer);
+  }
+
+  @Override
+  public void accept(HQLNoReturnVisitor visitor) {
+    visitor.visit(this);
   }
 
   @Override
@@ -40,7 +46,7 @@ public class HQLTableSetExpression extends HQLCollectionExpression<HQLTableExpre
     }
   }
 
-  private List<HQLTableExpression> readTables(HQLLexer lexer) {
+  private HQLDefaultCollection<HQLTableExpression> readTables(HQLLexer lexer) {
     List<HQLTableExpression> tables = new ArrayList<HQLTableExpression>();
     while (!lexer.isEof()) {
       // Read the next entry. Or break on failure.
@@ -58,13 +64,9 @@ public class HQLTableSetExpression extends HQLCollectionExpression<HQLTableExpre
       }
     }
 
-    return tables;
+    return new HQLDefaultCollection<HQLTableExpression>(tables);
   }
 
-
-  public Iterator<HQLTableExpression> iterator() {
-    return tables.iterator();
-  }
 
   public static boolean canParse(HQLExpression parent, HQLLexer lexer) {
     return parent.parentIs(HQLFromExpression.class);

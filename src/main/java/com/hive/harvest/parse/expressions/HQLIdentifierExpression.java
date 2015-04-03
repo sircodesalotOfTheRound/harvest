@@ -1,6 +1,7 @@
 package com.hive.harvest.parse.expressions;
 
 import com.hive.harvest.exceptions.HQLException;
+import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLIdentifierToken;
 import com.hive.harvest.parse.tokens.HQLToken;
@@ -15,6 +16,11 @@ public class HQLIdentifierExpression extends HQLExpression {
     super(parent, lexer);
 
     this.identifier = readIdentifier(lexer);
+  }
+
+  @Override
+  public void accept(HQLNoReturnVisitor visitor) {
+    visitor.visit(this);
   }
 
   private HQLToken readIdentifier(HQLLexer lexer) {

@@ -1,5 +1,6 @@
 package com.hive.harvest.parse.expressions;
 
+import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLToken;
 
@@ -13,6 +14,11 @@ public class HQLUnknownExpression extends HQLExpression {
     super(parent, lexer);
 
     this.token = lexer.readCurrentAndAdvance();
+  }
+
+  @Override
+  public void accept(HQLNoReturnVisitor visitor) {
+    visitor.visit(this);
   }
 
   public HQLToken token() {

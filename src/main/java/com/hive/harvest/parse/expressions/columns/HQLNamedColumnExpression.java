@@ -1,6 +1,7 @@
 package com.hive.harvest.parse.expressions.columns;
 
 import com.hive.harvest.exceptions.HQLException;
+import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.expressions.HQLExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLIdentifierToken;
@@ -17,6 +18,11 @@ public class HQLNamedColumnExpression extends HQLColumnExpression {
     this.identifier = readIdentifier(lexer);
   }
 
+  @Override
+  public void accept(HQLNoReturnVisitor visitor) {
+    visitor.visit(this);
+  }
+
   private HQLIdentifierToken readIdentifier(HQLLexer lexer) {
     if (!lexer.currentIs(HQLIdentifierToken.class)) {
       throw new HQLException("Identifier Expressions must be located on identifiers");
@@ -31,5 +37,10 @@ public class HQLNamedColumnExpression extends HQLColumnExpression {
 
   public String identifier() {
     return identifier.identifier();
+  }
+
+  @Override
+  public String toString() {
+    return String.format("[%s]", this.identifier());
   }
 }

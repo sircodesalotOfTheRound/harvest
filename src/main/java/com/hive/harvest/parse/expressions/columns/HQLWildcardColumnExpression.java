@@ -1,5 +1,6 @@
 package com.hive.harvest.parse.expressions.columns;
 
+import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.expressions.HQLExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLPunctuationToken;
@@ -16,6 +17,11 @@ public class HQLWildcardColumnExpression extends HQLColumnExpression {
     super(parent, lexer);
 
     this.token = readToken(lexer);
+  }
+
+  @Override
+  public void accept(HQLNoReturnVisitor visitor) {
+    visitor.visit(this);
   }
 
   private HQLToken readToken(HQLLexer lexer) {

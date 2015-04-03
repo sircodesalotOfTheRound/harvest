@@ -1,5 +1,6 @@
 package com.hive.harvest.parse.expressions.columns;
 
+import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.expressions.HQLExpression;
 import com.hive.harvest.parse.expressions.HQLIdentifierExpression;
 import com.hive.harvest.parse.expressions.HQLKeywordExpression;
@@ -21,6 +22,11 @@ public class HQLColumnSetExpression extends HQLCollectionExpression<HQLColumnExp
   public HQLColumnSetExpression(HQLExpression parent, HQLLexer lexer) {
     super(parent, lexer);
     this.columns = readColumns(lexer);
+  }
+
+  @Override
+  public void accept(HQLNoReturnVisitor visitor) {
+    visitor.visit(this);
   }
 
   @Override
