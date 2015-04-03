@@ -22,11 +22,11 @@ public class HQLTreeWriter extends HQLNoReturnVisitor {
   }
 
   private void increateIndent() {
-    this.indent += 1;
+    this.indent += 2;
   }
 
   private void decreaseIndent() {
-    this.indent -= 1;
+    this.indent -= 2;
   }
 
   @Override
@@ -78,7 +78,7 @@ public class HQLTreeWriter extends HQLNoReturnVisitor {
   public void visit(HQLSelectStatement expression) {
     this.increateIndent();
     this.onvisited(expression);
-    this.acceptAll(expression.columns());
+    this.accept(expression.columns());
     this.accept(expression.from());
     this.decreaseIndent();
   }
@@ -100,23 +100,28 @@ public class HQLTreeWriter extends HQLNoReturnVisitor {
 
   @Override
   public void visit(HQLNamedColumnExpression expression) {
-    this.indent += 1;
+    this.increateIndent();
     this.onvisited(expression);
-    this.indent -= 1;
+    this.decreaseIndent();
   }
 
   @Override
   protected void onvisited(HQLExpression expression) {
-    String content = String.format("%s%s : %s", this.getIndent(), expression, expression.getClass());
+    String content = String.format("%s%-20s : %s", this.getIndent(), expression, expression.getClass().getSimpleName());
     builder.append(content).append("\n");
   }
 
   private StringBuilder getIndent() {
     StringBuilder builder = new StringBuilder();
-    for (int index = 0; index < this.indent; index++) {
+    for (int index = 0; index < this.indent - 2; index++) {
       builder.append(" ");
     }
-    return builder;
+
+    if (this.indent > 2) {
+      return builder.append("+").append("-");
+    } else {
+      return builder;
+    }
   }
 
   @Override

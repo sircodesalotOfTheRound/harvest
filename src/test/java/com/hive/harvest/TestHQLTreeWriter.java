@@ -15,6 +15,17 @@ public class TestHQLTreeWriter {
     HQLTreeRootExpression root = new HQLTreeRootExpression(lexer);
     HQLTreeWriter writer = new HQLTreeWriter(root);
 
-    System.out.println(writer);
+    String result =
+      "(ROOT)               : HQLTreeRootExpression\n" +
+      "  +-SELECT               : HQLSelectStatement\n" +
+      "    +-(COLUMNS)            : HQLColumnSetExpression\n" +
+      "      +-[first]              : HQLNamedColumnExpression\n" +
+      "      +-[second]             : HQLNamedColumnExpression\n" +
+      "      +-[third]              : HQLNamedColumnExpression\n" +
+      "    +-FROM                 : HQLFromExpression\n" +
+      "      +-[table_1]            : HQLNamedTableExpression\n" +
+      "      +-[table_2]            : HQLNamedTableExpression\n";
+
+    assert (result.equals(writer.toString()));
   }
 }

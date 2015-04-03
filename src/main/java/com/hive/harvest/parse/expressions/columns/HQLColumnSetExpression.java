@@ -10,6 +10,7 @@ import com.hive.harvest.parse.tokens.HQLPunctuationToken;
 import com.hive.harvest.tools.HQLCollectionExpression;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import java.util.List;
  * Created by sircodesalot on 15/4/2.
  */
 public class HQLColumnSetExpression extends HQLCollectionExpression<HQLColumnExpression> {
+  private final String COLUMNS = "(COLUMNS)";
   private final List<HQLColumnExpression> columns;
 
   public HQLColumnSetExpression(HQLExpression parent, HQLLexer lexer) {
@@ -68,5 +70,10 @@ public class HQLColumnSetExpression extends HQLCollectionExpression<HQLColumnExp
 
   public static HQLColumnSetExpression read(HQLExpression parent, HQLLexer lexer) {
     return new HQLColumnSetExpression(parent, lexer);
+  }
+
+  @Override
+  public String toString() {
+    return COLUMNS;
   }
 }
