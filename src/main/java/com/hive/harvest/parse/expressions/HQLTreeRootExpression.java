@@ -4,6 +4,7 @@ import com.hive.harvest.parse.expressions.backtracking.HQLSelectStatementBacktra
 import com.hive.harvest.parse.expressions.backtracking.HQLUnknownExpressionBacktrackRule;
 import com.hive.harvest.parse.expressions.backtracking.interfaces.BacktrackRuleSet;
 import com.hive.harvest.parse.lexer.HQLLexer;
+import com.hive.harvest.tools.HQLCollectionExpression;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ public class HQLTreeRootExpression extends HQLExpression {
     .add(new HQLSelectStatementBacktrackRule())
     .add(new HQLUnknownExpressionBacktrackRule());
 
-  private final List<HQLExpression> expressions;
+  private final HQLCollectionExpression<HQLExpression> expressions;
 
   public HQLTreeRootExpression(HQLLexer lexer) {
     super(null, lexer);
@@ -24,17 +25,17 @@ public class HQLTreeRootExpression extends HQLExpression {
     this.expressions = readExpressions(lexer);
   }
 
-  private List<HQLExpression> readExpressions(HQLLexer lexer) {
+  private HQLCollectionExpression<HQLExpression> readExpressions(HQLLexer lexer) {
     List<HQLExpression> expressions = new ArrayList<HQLExpression>();
     while (!lexer.isEof()) {
       HQLExpression expression = rules.read(this, lexer);
       expressions.add(expression);
     }
 
-    return expressions;
+    return new HQLCollectionExpression.HQLDefaultCollection<HQLExpression>(expressions);
   }
 
-  public Iterable<HQLExpression> expressions() {
+  public HQLCollectionExpression<HQLExpression> expressions() {
     return this.expressions;
   }
 

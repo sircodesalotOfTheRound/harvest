@@ -6,6 +6,7 @@ import com.hive.harvest.parse.expressions.HQLKeywordExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLIdentifierToken;
 import com.hive.harvest.parse.tokens.HQLPunctuationToken;
+import com.hive.harvest.tools.HQLCollectionExpression;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,12 +15,17 @@ import java.util.List;
 /**
  * Created by sircodesalot on 15/4/2.
  */
-public class HQLColumnSetExpression extends HQLExpression implements Iterable<HQLColumnExpression> {
+public class HQLColumnSetExpression extends HQLCollectionExpression<HQLColumnExpression> {
   private final List<HQLColumnExpression> columns;
 
   public HQLColumnSetExpression(HQLExpression parent, HQLLexer lexer) {
     super(parent, lexer);
     this.columns = readColumns(lexer);
+  }
+
+  @Override
+  protected Iterable<HQLColumnExpression> contents() {
+    return columns;
   }
 
   private List<HQLColumnExpression> readColumns(HQLLexer lexer) {
@@ -28,19 +34,6 @@ public class HQLColumnSetExpression extends HQLExpression implements Iterable<HQ
 
     while (HQLColumnExpression.canParse(this, lexer)) {
       columns.add(HQLColumnExpression.read(this, lexer));
-
-
-      /*// Read the next token. If the token is a keyword, then drop out.
-      if (lexer.currentIs(HQLIdentifierToken.class)) {
-        if (!HQLKeywordExpression.isKeyword(lexer)) {
-          columns.add(HQLIdentifierExpression.read(this, lexer));
-        } else {
-          break;
-        }
-
-      } else if (lexer.currentIs(HQLPunctuationToken.class, HQLWildcardColumnExpression.WILDCARD)) {
-        columns.add(HQLWildcardColumnExpression.read(this, lexer));
-      }*/
 
       // If the following isn't a comma, then drop out.
       if (!lexer.isEof() && lexer.currentIs(HQLPunctuationToken.class, ",")) {
@@ -51,10 +44,6 @@ public class HQLColumnSetExpression extends HQLExpression implements Iterable<HQ
     }
 
     return columns;
-  }
-
-  public int count() {
-    return columns.size();
   }
 
   public boolean containsWildcardColumn() {
