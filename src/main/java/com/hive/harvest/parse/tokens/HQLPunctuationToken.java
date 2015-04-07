@@ -5,10 +5,11 @@ import com.hive.harvest.parse.lexer.HQLCharacterStream;
 /**
  * Created by sircodesalot on 15/4/2.
  */
-public class HQLPunctuationToken implements HQLToken {
+public class HQLPunctuationToken extends HQLToken {
   private final String token;
 
   private HQLPunctuationToken(HQLCharacterStream stream) {
+    super(stream.position());
     this.token = parseFromString(stream);
   }
 

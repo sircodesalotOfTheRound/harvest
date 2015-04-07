@@ -7,18 +7,18 @@ import com.hive.harvest.parse.expressions.tables.HQLTableExpression;
 import com.hive.harvest.parse.expressions.tables.HQLTableSetExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLIdentifierToken;
-import com.hive.harvest.tools.HQLCollectionExpression;
+import com.hive.harvest.tools.collections.HQLCollection;
 
 /**
  * Created by sircodesalot on 15/4/2.
  */
 public class HQLFromExpression extends HQLKeywordExpression {
-  private final HQLTableSetExpression tables;
+  private final HQLTableSetExpression tableSet;
 
   public HQLFromExpression(HQLExpression parent, HQLLexer lexer) {
     super(parent, lexer);
 
-    this.tables = readTables(lexer);
+    this.tableSet = readTables(lexer);
   }
 
   @Override
@@ -39,8 +39,8 @@ public class HQLFromExpression extends HQLKeywordExpression {
     return new HQLFromExpression(parent, lexer);
   }
 
-  public HQLCollectionExpression<HQLTableExpression> tables() {
-    return this.tables;
+  public HQLTableSetExpression tableSet() {
+    return this.tableSet;
   }
 
   @Override

@@ -37,7 +37,7 @@ public class HQLSelectStatement extends HQLKeywordExpression {
     }
   }
 
-  public HQLColumnSetExpression columns() {
+  public HQLColumnSetExpression columnSet() {
     return this.columns;
   }
 

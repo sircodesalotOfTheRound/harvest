@@ -2,15 +2,17 @@ package com.hive.harvest.parse.expressions;
 
 import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.lexer.HQLLexer;
+import com.hive.harvest.parse.tokens.HQLToken;
 
 /**
  * Created by sircodesalot on 15/4/2.
  */
-public abstract class HQLExpression {
+public abstract class HQLExpression extends HQLToken {
   private final HQLLexer lexer;
   private HQLExpression parent;
 
   public HQLExpression(HQLExpression parent, HQLLexer lexer) {
+    super(lexer.position());
     this.parent = parent;
     this.lexer = lexer;
   }

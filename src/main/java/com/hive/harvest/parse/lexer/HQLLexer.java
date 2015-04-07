@@ -11,16 +11,18 @@ import java.util.Stack;
  */
 public class HQLLexer {
   private final String text;
-  private final boolean skipWhitespaces;
   private final HQLTokenList tokens;
+  private boolean skipWhitespaces;
   private int currentIndex;
   private Stack<Integer> undoStack;
+  private Stack<Boolean> whitespaceStateStack;
 
-  public HQLLexer(String text, boolean skipWhitespaces) {
+  public HQLLexer(String text, boolean skipWhitespacesByDefault) {
     this.text = text;
-    this.skipWhitespaces = skipWhitespaces;
+    this.skipWhitespaces = skipWhitespacesByDefault;
     this.tokens = new HQLTokenList(text);
     this.undoStack = new Stack<Integer>();
+    this.whitespaceStateStack = new Stack<Boolean>();
   }
 
   public String text() {
@@ -43,6 +45,24 @@ public class HQLLexer {
 
   public HQLToken current() {
     return this.tokens.get(currentIndex);
+  }
+
+  public boolean isIncludingWhitespaces() {
+    return this.skipWhitespaces;
+  }
+
+  public void temporarilyIncludeWhitespaces() {
+    this.whitespaceStateStack.push(this.skipWhitespaces);
+    this.skipWhitespaces = false;
+  }
+
+  public void temporarilyExcludeWhitespaces() {
+    this.whitespaceStateStack.push(this.skipWhitespaces);
+    this.skipWhitespaces = true;
+  }
+
+  public void revertToPreviousWhitespaceInclusionState() {
+    this.skipWhitespaces = this.whitespaceStateStack.pop();
   }
 
   public HQLToken readCurrentAndAdvance() {
@@ -106,5 +126,9 @@ public class HQLLexer {
 
   public void clearUndoPoint() {
     this.undoStack.pop();
+  }
+
+  public HQLLexPosition position() {
+    return this.tokens.get(currentIndex).position();
   }
 }

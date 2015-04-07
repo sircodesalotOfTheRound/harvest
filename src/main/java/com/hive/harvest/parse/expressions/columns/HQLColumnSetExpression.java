@@ -6,7 +6,8 @@ import com.hive.harvest.parse.expressions.keywords.HQLKeywordExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLIdentifierToken;
 import com.hive.harvest.parse.tokens.HQLPunctuationToken;
-import com.hive.harvest.tools.HQLCollectionExpression;
+import com.hive.harvest.tools.collections.HQLAppendableCollection;
+import com.hive.harvest.tools.collections.HQLCollection;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,9 +16,9 @@ import java.util.List;
 /**
  * Created by sircodesalot on 15/4/2.
  */
-public class HQLColumnSetExpression extends HQLCollectionExpression<HQLColumnExpression> {
+public class HQLColumnSetExpression extends HQLExpression {
   private final String COLUMNS = "(COLUMNS)";
-  private final List<HQLColumnExpression> columns;
+  private final HQLCollection<HQLColumnExpression> columns;
 
   public HQLColumnSetExpression(HQLExpression parent, HQLLexer lexer) {
     super(parent, lexer);
@@ -29,14 +30,9 @@ public class HQLColumnSetExpression extends HQLCollectionExpression<HQLColumnExp
     visitor.visit(this);
   }
 
-  @Override
-  protected Iterable<HQLColumnExpression> contents() {
-    return columns;
-  }
-
-  private List<HQLColumnExpression> readColumns(HQLLexer lexer) {
+  private HQLCollection<HQLColumnExpression> readColumns(HQLLexer lexer) {
     lexer.readCurrentAndAdvance(HQLIdentifierToken.class, HQLKeywordExpression.SELECT);
-    List<HQLColumnExpression> columns = new ArrayList<HQLColumnExpression>();
+    HQLAppendableCollection<HQLColumnExpression> columns = new HQLAppendableCollection<HQLColumnExpression>();
 
     while (HQLColumnExpression.canParse(this, lexer)) {
       columns.add(HQLColumnExpression.read(this, lexer));
@@ -62,8 +58,8 @@ public class HQLColumnSetExpression extends HQLCollectionExpression<HQLColumnExp
     return false;
   }
 
-  public Iterator<HQLColumnExpression> iterator() {
-    return columns.iterator();
+  public HQLCollection<HQLColumnExpression> columns() {
+    return this.columns;
   }
 
   public static HQLColumnSetExpression read(HQLExpression parent, HQLLexer lexer) {

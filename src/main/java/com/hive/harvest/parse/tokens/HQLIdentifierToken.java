@@ -6,10 +6,11 @@ import com.hive.harvest.parse.lexer.HQLCharacterStream;
 /**
  * Created by sircodesalot on 15/4/2.
  */
-public class HQLIdentifierToken implements HQLToken {
+public class HQLIdentifierToken extends HQLToken {
   private final String identifier;
 
   private HQLIdentifierToken(HQLCharacterStream stream) {
+    super(stream.position());
     this.identifier = parseIdentifier(stream);
   }
 

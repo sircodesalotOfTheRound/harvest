@@ -44,7 +44,7 @@ public class HQLTreeWriter extends HQLNoReturnVisitor {
   public void visit(HQLFromExpression expression) {
     this.increateIndent();
     this.onvisited(expression);
-    this.acceptAll(expression.tables());
+    this.acceptAll(expression.tableSet().tables());
     this.decreaseIndent();
   }
 
@@ -81,7 +81,7 @@ public class HQLTreeWriter extends HQLNoReturnVisitor {
   public void visit(HQLTableSetExpression expression) {
     this.increateIndent();
     this.onvisited(expression);
-    this.acceptAll(expression);
+    this.acceptAll(expression.tables());
     this.decreaseIndent();
   }
 
@@ -89,7 +89,7 @@ public class HQLTreeWriter extends HQLNoReturnVisitor {
   public void visit(HQLSelectStatement expression) {
     this.increateIndent();
     this.onvisited(expression);
-    this.accept(expression.columns());
+    this.accept(expression.columnSet());
     this.accept(expression.from());
     this.decreaseIndent();
   }
@@ -98,7 +98,7 @@ public class HQLTreeWriter extends HQLNoReturnVisitor {
   public void visit(HQLColumnSetExpression expression) {
     this.increateIndent();
     this.onvisited(expression);
-    this.acceptAll(expression);
+    this.acceptAll(expression.columns());
     this.decreaseIndent();
   }
 

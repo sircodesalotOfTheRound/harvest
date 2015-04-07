@@ -26,12 +26,12 @@ public class TestHQLSelectStatement {
     final Set<String> columnNames = fillSet("first", "second", "third", "fourth");
     final Set<String> tableNames = fillSet("table1", "table2");
 
-    assert (select.columns().size() == 5);
-    assert (select.columns().ofType(HQLWildcardColumnExpression.class).size() == 1);
-    assert (select.columns().ofType(HQLNamedColumnExpression.class).size() == 4);
-    assert (select.from().tables().size() == 2);
+    assert (select.columnSet().columns().size() == 5);
+    assert (select.columnSet().columns().ofType(HQLWildcardColumnExpression.class).size() == 1);
+    assert (select.columnSet().columns().ofType(HQLNamedColumnExpression.class).size() == 4);
+    assert (select.from().tableSet().tables().size() == 2);
 
-    boolean areAllColumnsContainedInTheSetAbove = select.columns()
+    boolean areAllColumnsContainedInTheSetAbove = select.columnSet().columns()
       .ofType(HQLNamedColumnExpression.class)
       .all(new Predicate<HQLNamedColumnExpression>() {
         @Override
@@ -40,7 +40,7 @@ public class TestHQLSelectStatement {
         }
       });
 
-    boolean areAllTablesContainedInTheSetAbove = select.columns()
+    boolean areAllTablesContainedInTheSetAbove = select.columnSet().columns()
       .ofType(HQLNamedTableExpression.class)
       .all(new Predicate<HQLNamedTableExpression>() {
         @Override

@@ -6,7 +6,8 @@ import com.hive.harvest.parse.expressions.backtracking.HQLSelectStatementBacktra
 import com.hive.harvest.parse.expressions.backtracking.HQLUnknownExpressionBacktrackRule;
 import com.hive.harvest.parse.expressions.backtracking.interfaces.BacktrackRuleSet;
 import com.hive.harvest.parse.lexer.HQLLexer;
-import com.hive.harvest.tools.HQLCollectionExpression;
+import com.hive.harvest.tools.collections.HQLAppendableCollection;
+import com.hive.harvest.tools.collections.HQLCollection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,14 +15,14 @@ import java.util.List;
 /**
  * Created by sircodesalot on 15/4/2.
  */
-public class HQLTreeRootExpression extends HQLCollectionExpression<HQLExpression> {
+public class HQLTreeRootExpression extends HQLExpression {
   private static final String ROOT = "(ROOT)";
   private static final BacktrackRuleSet<HQLExpression> rules = new BacktrackRuleSet<HQLExpression>()
     .add(new HQLSelectStatementBacktrackRule())
     .add(new HQLUnknownExpressionBacktrackRule());
 
 
-  private final HQLCollectionExpression<HQLExpression> expressions;
+  private final HQLCollection<HQLExpression> expressions;
 
   public HQLTreeRootExpression(HQLLexer lexer) {
     super(null, lexer);
@@ -29,17 +30,17 @@ public class HQLTreeRootExpression extends HQLCollectionExpression<HQLExpression
     this.expressions = readExpressions(lexer);
   }
 
-  private HQLCollectionExpression<HQLExpression> readExpressions(HQLLexer lexer) {
-    List<HQLExpression> expressions = new ArrayList<HQLExpression>();
+  private HQLCollection<HQLExpression> readExpressions(HQLLexer lexer) {
+    HQLAppendableCollection<HQLExpression> expressions = new HQLAppendableCollection<>();
     while (!lexer.isEof()) {
       HQLExpression expression = rules.read(this, lexer);
       expressions.add(expression);
     }
 
-    return new HQLCollectionExpression.HQLDefaultCollection<HQLExpression>(expressions);
+    return expressions;
   }
 
-  public HQLCollectionExpression<HQLExpression> expressions() {
+  public HQLCollection<HQLExpression> expressions() {
     return this.expressions;
   }
 
@@ -50,11 +51,6 @@ public class HQLTreeRootExpression extends HQLCollectionExpression<HQLExpression
   @Override
   public void accept(HQLNoReturnVisitor visitor) {
     visitor.visit(this);
-  }
-
-  @Override
-  protected Iterable<HQLExpression> contents() {
-    return expressions;
   }
 
   @Override

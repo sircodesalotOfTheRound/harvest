@@ -5,11 +5,12 @@ import com.hive.harvest.parse.lexer.HQLCharacterStream;
 /**
  * Created by sircodesalot on 15/4/2.
  */
-public class HQLWhitespaceToken implements HQLToken {
+public class HQLWhitespaceToken extends HQLToken {
   private char whitespaceCharacter;
   private final int length;
 
   private HQLWhitespaceToken(HQLCharacterStream stream) {
+    super(stream.position());
     this.whitespaceCharacter = stream.current();
     this.length = parseWhitespaceLength(stream);
   }

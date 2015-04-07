@@ -8,7 +8,8 @@ import com.hive.harvest.parse.expressions.keywords.HQLKeywordExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLIdentifierToken;
 import com.hive.harvest.parse.tokens.HQLPunctuationToken;
-import com.hive.harvest.tools.HQLCollectionExpression;
+import com.hive.harvest.tools.collections.HQLAppendableCollection;
+import com.hive.harvest.tools.collections.HQLCollection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,13 +17,12 @@ import java.util.List;
 /**
  * Created by sircodesalot on 15/4/2.
  */
-public class HQLTableSetExpression extends HQLCollectionExpression<HQLTableExpression> {
-  private final HQLCollectionExpression<HQLTableExpression> tables;
+public class HQLTableSetExpression extends HQLExpression {
+  private final HQLCollection<HQLTableExpression> tables;
 
   public HQLTableSetExpression(HQLExpression parent, HQLLexer lexer) {
     super(parent, lexer);
 
-    //this.validateLexing(parent, lexer);
     this.tables = readTables(lexer);
   }
 
@@ -31,22 +31,8 @@ public class HQLTableSetExpression extends HQLCollectionExpression<HQLTableExpre
     visitor.visit(this);
   }
 
-  @Override
-  protected Iterable<HQLTableExpression> contents() {
-    return tables;
-  }
-
-  private void validateLexing(HQLExpression parent, HQLLexer lexer) {
-    // Todo, fix this validation.
-    if (!lexer.currentIs(HQLIdentifierToken.class, HQLKeywordExpression.FROM)) {
-      throw new HQLException("Table set must be a NamedExpression");
-    } else if (parent == null || !parent.parentIs(HQLFromExpression.class)) {
-      throw new HQLException("Parent of HQLTableSetExpression must be HQLFromExpression");
-    }
-  }
-
-  private HQLDefaultCollection<HQLTableExpression> readTables(HQLLexer lexer) {
-    List<HQLTableExpression> tables = new ArrayList<HQLTableExpression>();
+  private HQLCollection<HQLTableExpression> readTables(HQLLexer lexer) {
+    HQLAppendableCollection<HQLTableExpression> tables = new HQLAppendableCollection<HQLTableExpression>();
     while (!lexer.isEof()) {
       // Read the next entry. Or break on failure.
       if (HQLTableExpression.canParse(this, lexer)) {
@@ -63,7 +49,11 @@ public class HQLTableSetExpression extends HQLCollectionExpression<HQLTableExpre
       }
     }
 
-    return new HQLDefaultCollection<HQLTableExpression>(tables);
+    return tables;
+  }
+
+  public HQLCollection<HQLTableExpression> tables() {
+    return this.tables;
   }
 
 

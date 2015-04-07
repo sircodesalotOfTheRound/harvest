@@ -11,6 +11,7 @@ import com.hive.harvest.parse.expressions.root.HQLTreeRootExpression;
 import com.hive.harvest.parse.expressions.tables.HQLNamedTableExpression;
 import com.hive.harvest.parse.expressions.tables.HQLTableSetExpression;
 import com.hive.harvest.parse.expressions.unknown.HQLUnknownExpression;
+import com.hive.harvest.parse.expressions.variables.HQLStringExpression;
 
 /**
  * Created by sircodesalot on 15/4/2.
@@ -67,5 +68,9 @@ public abstract class HQLNoReturnVisitor {
 
   protected void accept(HQLExpression expression) {
     expression.accept(this);
+  }
+
+  public void visit(HQLStringExpression expression) {
+    this.onvisited(expression);
   }
 }
