@@ -1,4 +1,4 @@
-package com.hive.harvest;
+package com.hive.harvest.tokenization;
 
 import com.hive.harvest.parse.lexer.HQLTokenList;
 import com.hive.harvest.parse.tokens.*;

@@ -23,7 +23,5 @@ public class TestHQLTreeWriter {
       "      +-[table_2]            : HQLNamedTableExpression\n");
 
     assert (result.equals(command.stringTree()));
-
-    System.out.println(command.stringTree());
   }
 }

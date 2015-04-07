@@ -1,4 +1,4 @@
-package com.hive.harvest;
+package com.hive.harvest.statements;
 
 import com.hive.harvest.parse.expressions.tables.HQLNamedTableExpression;
 import com.hive.harvest.parse.expressions.columns.HQLNamedColumnExpression;

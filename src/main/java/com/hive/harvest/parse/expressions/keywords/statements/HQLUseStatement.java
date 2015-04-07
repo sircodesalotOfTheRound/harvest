@@ -9,7 +9,7 @@ import com.hive.harvest.parse.tokens.HQLIdentifierToken;
 /**
  * Created by sircodesalot on 15/4/7.
  */
-public class HQLUseStatement extends HQLExpression {
+public class HQLUseStatement extends HQLExpression implements HQLStatementExpression {
   private final HQLIdentifierToken identifier;
 
   public HQLUseStatement(HQLExpression parent, HQLLexer lexer) {

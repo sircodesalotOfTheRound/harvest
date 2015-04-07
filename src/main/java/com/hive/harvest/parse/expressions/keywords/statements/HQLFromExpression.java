@@ -12,7 +12,7 @@ import com.hive.harvest.tools.collections.HQLCollection;
 /**
  * Created by sircodesalot on 15/4/2.
  */
-public class HQLFromExpression extends HQLKeywordExpression {
+public class HQLFromExpression extends HQLKeywordExpression implements HQLStatementExpression {
   private final HQLTableSetExpression tableSet;
 
   public HQLFromExpression(HQLExpression parent, HQLLexer lexer) {

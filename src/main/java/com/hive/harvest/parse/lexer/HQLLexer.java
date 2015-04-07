@@ -47,6 +47,14 @@ public class HQLLexer {
     return this.tokens.get(currentIndex);
   }
 
+  public int currentIndex() {
+    return this.currentIndex;
+  }
+
+  public HQLToken atIndex(int index) {
+    return tokens.get(index);
+  }
+
   public boolean isIncludingWhitespaces() {
     return this.skipWhitespaces;
   }

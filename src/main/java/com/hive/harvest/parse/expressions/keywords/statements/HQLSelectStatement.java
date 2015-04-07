@@ -9,7 +9,7 @@ import com.hive.harvest.parse.expressions.columns.HQLColumnSetExpression;
 /**
  * Created by sircodesalot on 15/4/2.
  */
-public class HQLSelectStatement extends HQLKeywordExpression {
+public class HQLSelectStatement extends HQLKeywordExpression implements HQLStatementExpression {
   private final HQLColumnSetExpression columns;
   private final HQLFromExpression from;
 

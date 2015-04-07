@@ -1,4 +1,4 @@
-package com.hive.harvest;
+package com.hive.harvest.tokenization;
 
 import com.hive.harvest.exceptions.HQLException;
 import com.hive.harvest.parse.lexer.HQLCharacterStream;

@@ -1,4 +1,4 @@
-package com.hive.harvest;
+package com.hive.harvest.tokenization;
 
 import com.hive.harvest.parse.expressions.keywords.HQLKeywordExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;

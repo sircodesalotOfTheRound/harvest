@@ -2,10 +2,7 @@ package com.hive.harvest.parse.expressions.root;
 
 import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.expressions.HQLExpression;
-import com.hive.harvest.parse.expressions.backtracking.HQLFromExpressionBacktrackRule;
-import com.hive.harvest.parse.expressions.backtracking.HQLSelectStatementBacktrackRule;
-import com.hive.harvest.parse.expressions.backtracking.HQLUnknownExpressionBacktrackRule;
-import com.hive.harvest.parse.expressions.backtracking.HQLUseStatementBacktrackRule;
+import com.hive.harvest.parse.expressions.backtracking.*;
 import com.hive.harvest.parse.expressions.backtracking.interfaces.BacktrackRuleSet;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.tools.collections.HQLAppendableCollection;
@@ -23,6 +20,7 @@ public class HQLTreeRootExpression extends HQLExpression {
     .add(new HQLSelectStatementBacktrackRule())
     .add(new HQLFromExpressionBacktrackRule())
     .add(new HQLUseStatementBacktrackRule())
+    .add(new HQLShellStatementBacktrackRule())
     .add(new HQLUnknownExpressionBacktrackRule());
 
 

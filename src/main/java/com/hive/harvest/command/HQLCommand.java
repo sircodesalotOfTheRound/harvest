@@ -13,9 +13,9 @@ public class HQLCommand {
   private final HQLTreeRootExpression root;
 
   public HQLCommand(String text, HQLCommandSettings settings) {
-    this.text = text;
+    this.text = text.trim();
     this.settings = settings;
-    this.root = parseTree(text);
+    this.root = parseTree(this.text);
   }
 
   public HQLCommand(String text) {
