@@ -1,9 +1,6 @@
 package com.hive.harvest;
 
 import com.hive.harvest.command.HQLCommand;
-import com.hive.harvest.graph.HQLTreeWriter;
-import com.hive.harvest.parse.expressions.root.HQLTreeRootExpression;
-import com.hive.harvest.parse.lexer.HQLLexer;
 import org.junit.Test;
 
 /**
@@ -25,8 +22,8 @@ public class TestHQLTreeWriter {
       "      +-[table_1]            : HQLNamedTableExpression\n" +
       "      +-[table_2]            : HQLNamedTableExpression\n");
 
-    assert (result.equals(command.tree()));
+    assert (result.equals(command.stringTree()));
 
-    System.out.println(command.tree());
+    System.out.println(command.stringTree());
   }
 }

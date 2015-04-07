@@ -27,16 +27,20 @@ public class HQLCommand {
     return new HQLTreeRootExpression(lexer);
   }
 
-  public String tree() {
+  public String stringTree() {
     return new HQLTreeWriter(text, root).toString();
   }
 
   @Override
   public String toString() {
-    return tree();
+    return stringTree();
   }
 
   public String text() {
     return this.text;
+  }
+
+  public HQLTreeRootExpression tree() {
+    return this.root;
   }
 }

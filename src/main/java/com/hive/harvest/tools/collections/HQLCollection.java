@@ -70,6 +70,14 @@ public abstract class HQLCollection<T> implements Iterable<T> {
     return items;
   }
 
+  public <U> U firstAs(Class<U> type) {
+    return (U)this.first();
+  }
+
+  public <U> U secondAs(Class<U> type) {
+    return (U)this.first();
+  }
+
   public T first() {
     Iterator<T> iterator = this.items().iterator();
     return iterator.next();
