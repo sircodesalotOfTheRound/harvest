@@ -4,12 +4,10 @@ import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.expressions.HQLExpression;
 import com.hive.harvest.parse.expressions.backtracking.*;
 import com.hive.harvest.parse.expressions.backtracking.interfaces.BacktrackRuleSet;
+import com.hive.harvest.parse.expressions.unknown.HQLUnknownExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.tools.collections.HQLAppendableCollection;
 import com.hive.harvest.tools.collections.HQLCollection;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by sircodesalot on 15/4/2.
@@ -20,8 +18,8 @@ public class HQLTreeRootExpression extends HQLExpression {
     .add(new HQLSelectStatementBacktrackRule())
     .add(new HQLFromExpressionBacktrackRule())
     .add(new HQLUseStatementBacktrackRule())
-    .add(new HQLShellStatementBacktrackRule())
-    .add(new HQLUnknownExpressionBacktrackRule());
+    .add(new HQLCreateStatementBacktrackRule())
+    .add(new HQLShellStatementBacktrackRule());
 
 
   private final HQLCollection<HQLExpression> expressions;
@@ -36,7 +34,12 @@ public class HQLTreeRootExpression extends HQLExpression {
     HQLAppendableCollection<HQLExpression> expressions = new HQLAppendableCollection<>();
     while (!lexer.isEof()) {
       HQLExpression expression = rules.read(this, lexer);
-      expressions.add(expression);
+
+      if (expression != null) {
+        expressions.add(expression);
+      } else {
+        expressions.add(new HQLUnknownExpression(this, lexer));
+      }
     }
 
     return expressions;

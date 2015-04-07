@@ -19,6 +19,7 @@ public abstract class HQLKeywordExpression extends HQLExpression {
   public static final String FROM = "FROM";
   public static final String WHERE = "WHERE";
   public static final String USE = "USE";
+  public static final String CREATE = "CREATE";
 
   private final HQLIdentifierToken token;
 
@@ -50,6 +51,7 @@ public abstract class HQLKeywordExpression extends HQLExpression {
     keywords.add(FROM);
     keywords.add(WHERE);
     keywords.add(USE);
+    keywords.add(CREATE);
 
     return keywords;
   }
