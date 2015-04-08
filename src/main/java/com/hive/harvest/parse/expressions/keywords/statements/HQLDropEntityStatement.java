@@ -8,14 +8,12 @@ import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLIdentifierToken;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by sircodesalot on 15/4/7.
  */
-public class HQLCreateStatement extends HQLExpression implements HQLStatementExpression {
+public class HQLDropEntityStatement extends HQLExpression implements HQLStatementExpression {
   public enum EntityType {
     TABLE("TABLE");
 
@@ -54,7 +52,7 @@ public class HQLCreateStatement extends HQLExpression implements HQLStatementExp
   private final EntityType entityType;
   private final HQLIdentifierToken identifier;
 
-  public HQLCreateStatement(HQLExpression parent, HQLLexer lexer) {
+  public HQLDropEntityStatement(HQLExpression parent, HQLLexer lexer) {
     super(parent, lexer);
 
     this.entityType = this.readEntityType(lexer);
@@ -62,7 +60,7 @@ public class HQLCreateStatement extends HQLExpression implements HQLStatementExp
   }
 
   private EntityType readEntityType(HQLLexer lexer) {
-    lexer.readCurrentAndAdvance(HQLIdentifierToken.class, HQLKeywordExpression.CREATE);
+    lexer.readCurrentAndAdvance(HQLIdentifierToken.class, HQLKeywordExpression.DROP);
 
     if (EntityType.isValidEntityType((HQLIdentifierToken) lexer.current())) {
       return EntityType.fromIdentifierToken(lexer.readCurrentAndAdvance(HQLIdentifierToken.class));
@@ -88,7 +86,7 @@ public class HQLCreateStatement extends HQLExpression implements HQLStatementExp
     return this.identifier.identifier();
   }
 
-  public static HQLCreateStatement read(HQLExpression parent, HQLLexer lexer) {
-    return new HQLCreateStatement(parent, lexer);
+  public static HQLDropEntityStatement read(HQLExpression parent, HQLLexer lexer) {
+    return new HQLDropEntityStatement(parent, lexer);
   }
 }

@@ -19,6 +19,7 @@ public class HQLTreeRootExpression extends HQLExpression {
     .add(new HQLFromExpressionBacktrackRule())
     .add(new HQLUseStatementBacktrackRule())
     .add(new HQLCreateStatementBacktrackRule())
+    .add(new HQLDropEntityStatementBacktrackRule())
     .add(new HQLShellStatementBacktrackRule());
 
 

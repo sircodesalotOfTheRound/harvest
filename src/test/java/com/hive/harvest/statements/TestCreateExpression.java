@@ -1,7 +1,7 @@
 package com.hive.harvest.statements;
 
 import com.hive.harvest.command.HQLCommand;
-import com.hive.harvest.parse.expressions.keywords.statements.HQLCreateStatement;
+import com.hive.harvest.parse.expressions.keywords.statements.HQLCreateEntityStatement;
 import org.junit.Test;
 
 /**
@@ -11,9 +11,9 @@ public class TestCreateExpression {
   @Test
   public void testCreateExpression() {
     HQLCommand command = new HQLCommand("create table my_table");
-    HQLCreateStatement statement = command.tree().expressions().firstAs(HQLCreateStatement.class);
+    HQLCreateEntityStatement statement = command.tree().expressions().firstAs(HQLCreateEntityStatement.class);
 
-    assert (statement.entityType() == HQLCreateStatement.EntityType.TABLE);
+    assert (statement.entityType() == HQLCreateEntityStatement.EntityType.TABLE);
     assert (statement.identifier().equals("my_table"));
   }
 }
