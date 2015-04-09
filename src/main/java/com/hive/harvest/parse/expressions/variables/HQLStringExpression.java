@@ -67,6 +67,11 @@ public class HQLStringExpression extends HQLExpression {
     visitor.visit(this);
   }
 
+  @Override
+  public HQLCollection<HQLToken> children() {
+    return null;
+  }
+
   public static HQLStringExpression read(HQLExpression parent, HQLLexer lexer) {
     return new HQLStringExpression(parent, lexer);
   }

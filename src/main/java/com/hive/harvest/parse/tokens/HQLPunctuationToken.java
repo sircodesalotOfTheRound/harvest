@@ -6,6 +6,10 @@ import com.hive.harvest.parse.lexer.HQLCharacterStream;
  * Created by sircodesalot on 15/4/2.
  */
 public class HQLPunctuationToken extends HQLToken {
+  public static final String COMMA = ",";
+  public static final String OPEN_PARENS = "(";
+  public static final String CLOSE_PARENS = ")";
+
   private final String token;
 
   private HQLPunctuationToken(HQLCharacterStream stream) {

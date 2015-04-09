@@ -4,6 +4,7 @@ import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.expressions.HQLExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLToken;
+import com.hive.harvest.tools.collections.HQLCollection;
 
 /**
  * Created by sircodesalot on 15/4/2.
@@ -20,6 +21,11 @@ public class HQLUnknownExpression extends HQLExpression {
   @Override
   public void accept(HQLNoReturnVisitor visitor) {
     visitor.visit(this);
+  }
+
+  @Override
+  public HQLCollection<HQLToken> children() {
+    return null;
   }
 
   public HQLToken token() {

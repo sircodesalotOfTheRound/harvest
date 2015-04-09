@@ -8,6 +8,7 @@ import com.hive.harvest.parse.expressions.keywords.HQLKeywordExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLIdentifierToken;
 import com.hive.harvest.parse.tokens.HQLPunctuationToken;
+import com.hive.harvest.parse.tokens.HQLToken;
 import com.hive.harvest.tools.collections.HQLAppendableCollection;
 import com.hive.harvest.tools.collections.HQLCollection;
 
@@ -29,6 +30,11 @@ public class HQLTableSetExpression extends HQLExpression {
   @Override
   public void accept(HQLNoReturnVisitor visitor) {
     visitor.visit(this);
+  }
+
+  @Override
+  public HQLCollection<HQLToken> children() {
+    return null;
   }
 
   private HQLCollection<HQLTableExpression> readTables(HQLLexer lexer) {

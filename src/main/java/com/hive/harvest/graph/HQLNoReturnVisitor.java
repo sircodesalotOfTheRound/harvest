@@ -1,5 +1,6 @@
 package com.hive.harvest.graph;
 
+import com.hive.harvest.parse.expressions.delimiters.HQLCommaExpression;
 import com.hive.harvest.parse.expressions.*;
 import com.hive.harvest.parse.expressions.columns.HQLColumnSetExpression;
 import com.hive.harvest.parse.expressions.columns.HQLNamedColumnExpression;
@@ -71,6 +72,10 @@ public abstract class HQLNoReturnVisitor {
   }
 
   public void visit(HQLStringExpression expression) {
+    this.onvisited(expression);
+  }
+
+  public void visit(HQLCommaExpression expression) {
     this.onvisited(expression);
   }
 }

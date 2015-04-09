@@ -5,6 +5,8 @@ import com.hive.harvest.parse.expressions.HQLExpression;
 import com.hive.harvest.parse.expressions.backtracking.HQLNamedTableExpressionBacktrackRule;
 import com.hive.harvest.parse.expressions.backtracking.interfaces.BacktrackRuleSet;
 import com.hive.harvest.parse.lexer.HQLLexer;
+import com.hive.harvest.parse.tokens.HQLToken;
+import com.hive.harvest.tools.collections.HQLCollection;
 
 /**
  * Created by sircodesalot on 15/4/3.
@@ -15,6 +17,11 @@ public abstract class HQLTableExpression extends HQLExpression {
 
   public HQLTableExpression(HQLExpression parent, HQLLexer lexer) {
     super(parent, lexer);
+  }
+
+  @Override
+  public HQLCollection<HQLToken> children() {
+    return null;
   }
 
   public static boolean canParse(HQLExpression parent, HQLLexer lexer) {

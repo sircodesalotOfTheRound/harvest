@@ -1,7 +1,10 @@
 package com.hive.harvest.statements;
 
 import com.hive.harvest.command.HQLCommand;
-import com.hive.harvest.parse.expressions.keywords.statements.HQLCreateEntityStatement;
+import com.hive.harvest.parse.expressions.keywords.statements.create.HQLCreateEntityStatement;
+import com.hive.harvest.parse.expressions.keywords.statements.create.HQLTypeConstrainedColumnExpression;
+import com.hive.harvest.parse.expressions.keywords.statements.create.tools.HQLEntityType;
+import com.hive.harvest.tools.collections.HQLCollection;
 import org.junit.Test;
 
 /**
@@ -13,7 +16,20 @@ public class TestCreateExpression {
     HQLCommand command = new HQLCommand("create table my_table");
     HQLCreateEntityStatement statement = command.tree().expressions().firstAs(HQLCreateEntityStatement.class);
 
-    assert (statement.entityType() == HQLCreateEntityStatement.EntityType.TABLE);
+    assert (statement.entityType() == HQLEntityType.TABLE);
     assert (statement.identifier().equals("my_table"));
+  }
+
+  @Test
+  public void testCreateExpressionWithParameters() {
+    HQLCommand command = new HQLCommand("create table my_table (first INT, second STRING)");
+    HQLCreateEntityStatement statement = command.tree().expressions().firstAs(HQLCreateEntityStatement.class);
+    HQLCollection<HQLTypeConstrainedColumnExpression> entries = statement.columnGroup().entries();
+
+    assert (entries.first().identifier().toString().equals("first"));
+    assert (entries.first().typeConstraint().type().equals("INT"));
+
+    assert (entries.second().identifier().toString().equals("second"));
+    assert (entries.second().typeConstraint().type().equals("STRING"));
   }
 }

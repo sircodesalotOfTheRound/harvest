@@ -5,6 +5,8 @@ import com.hive.harvest.parse.expressions.HQLExpression;
 import com.hive.harvest.parse.expressions.keywords.HQLKeywordExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.expressions.columns.HQLColumnSetExpression;
+import com.hive.harvest.parse.tokens.HQLToken;
+import com.hive.harvest.tools.collections.HQLCollection;
 
 /**
  * Created by sircodesalot on 15/4/2.
@@ -23,6 +25,11 @@ public class HQLSelectStatement extends HQLKeywordExpression implements HQLState
   @Override
   public void accept(HQLNoReturnVisitor visitor) {
     visitor.visit(this);
+  }
+
+  @Override
+  public HQLCollection<HQLToken> children() {
+    return null;
   }
 
   private HQLColumnSetExpression readColumns(HQLLexer lexer) {

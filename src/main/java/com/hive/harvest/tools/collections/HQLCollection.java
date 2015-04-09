@@ -1,6 +1,9 @@
 package com.hive.harvest.tools.collections;
 
+import com.hive.harvest.parse.tokens.HQLToken;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
@@ -10,6 +13,13 @@ import java.util.function.Predicate;
  * Created by sircodesalot on 15/4/3.
  */
 public abstract class HQLCollection<T> implements Iterable<T> {
+  public static final HQLCollection<HQLToken> EMPTY = new HQLCollection<HQLToken>() {
+    private final List<HQLToken> emptyList = new ArrayList<HQLToken>();
+    @Override
+    public Iterable<HQLToken> items() {
+      return emptyList;
+    }
+  };
 
   public abstract Iterable<T> items();
 
@@ -35,6 +45,15 @@ public abstract class HQLCollection<T> implements Iterable<T> {
     }
 
     return true;
+  }
+
+  public <U> HQLCollection<U> castTo(Class<U> toType) {
+    HQLAppendableCollection<U> castedItems = new HQLAppendableCollection<U>();
+    for (T item : this.items()) {
+      castedItems.add((U)item);
+    }
+
+    return castedItems;
   }
 
   public <U> HQLCollection<U> ofType(Class<U> type) {
@@ -79,14 +98,22 @@ public abstract class HQLCollection<T> implements Iterable<T> {
   }
 
   public T first() {
-    Iterator<T> iterator = this.items().iterator();
-    return iterator.next();
+    if (this.items() instanceof List) {
+      return (T)((List<T>)this.items()).get(0);
+    } else {
+      Iterator<T> iterator = this.items().iterator();
+      return iterator.next();
+    }
   }
 
   public T second() {
-    Iterator<T> iterator = this.items().iterator();
-    iterator.next();
-    return this.iterator().next();
+    if (this.items() instanceof List) {
+      return (T)((List<T>)this.items()).get(1);
+    } else {
+      Iterator<T> iterator = this.items().iterator();
+      iterator.next();
+      return iterator.next();
+    }
   }
 
   public int size() {

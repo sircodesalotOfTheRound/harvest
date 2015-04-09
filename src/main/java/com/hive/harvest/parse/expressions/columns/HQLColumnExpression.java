@@ -6,6 +6,8 @@ import com.hive.harvest.parse.expressions.backtracking.HQLNamedColumnExpressionB
 import com.hive.harvest.parse.expressions.backtracking.HQLWildcardColumnExpressionBacktrackRule;
 import com.hive.harvest.parse.expressions.backtracking.interfaces.BacktrackRuleSet;
 import com.hive.harvest.parse.lexer.HQLLexer;
+import com.hive.harvest.parse.tokens.HQLToken;
+import com.hive.harvest.tools.collections.HQLCollection;
 
 /**
  * Created by sircodesalot on 15/4/3.
@@ -17,6 +19,11 @@ public abstract class HQLColumnExpression extends HQLExpression {
 
   public HQLColumnExpression(HQLExpression parent, HQLLexer lexer) {
     super(parent, lexer);
+  }
+
+  @Override
+  public HQLCollection<HQLToken> children() {
+    return null;
   }
 
   public static HQLColumnExpression read(HQLExpression parent, HQLLexer lexer) {

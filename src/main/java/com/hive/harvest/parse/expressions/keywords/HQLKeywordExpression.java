@@ -5,6 +5,8 @@ import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.expressions.HQLExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLIdentifierToken;
+import com.hive.harvest.parse.tokens.HQLToken;
+import com.hive.harvest.tools.collections.HQLCollection;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -28,6 +30,11 @@ public abstract class HQLKeywordExpression extends HQLExpression {
     super(parent, lexer);
 
     this.token = readToken(lexer);
+  }
+
+  @Override
+  public HQLCollection<HQLToken> children() {
+    return null;
   }
 
   private HQLIdentifierToken readToken(HQLLexer lexer) {

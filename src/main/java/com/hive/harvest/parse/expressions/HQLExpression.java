@@ -3,6 +3,7 @@ package com.hive.harvest.parse.expressions;
 import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLToken;
+import com.hive.harvest.tools.collections.HQLCollection;
 
 /**
  * Created by sircodesalot on 15/4/2.
@@ -30,4 +31,6 @@ public abstract class HQLExpression extends HQLToken {
   }
 
   public abstract void accept(HQLNoReturnVisitor visitor);
+
+  public abstract HQLCollection<HQLToken> children();
 }

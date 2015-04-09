@@ -109,7 +109,7 @@ public class HQLLexer {
   }
 
   public <T extends HQLToken> boolean currentIs(Class<T> type) {
-    return type.isAssignableFrom(current().getClass());
+    return !this.isEof() && type.isAssignableFrom(current().getClass());
   }
 
   public <T extends HQLToken> boolean currentIsMatchCase(Class<T> type, String representation) {

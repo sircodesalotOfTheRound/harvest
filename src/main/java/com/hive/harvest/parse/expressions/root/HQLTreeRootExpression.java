@@ -6,6 +6,7 @@ import com.hive.harvest.parse.expressions.backtracking.*;
 import com.hive.harvest.parse.expressions.backtracking.interfaces.BacktrackRuleSet;
 import com.hive.harvest.parse.expressions.unknown.HQLUnknownExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
+import com.hive.harvest.parse.tokens.HQLToken;
 import com.hive.harvest.tools.collections.HQLAppendableCollection;
 import com.hive.harvest.tools.collections.HQLCollection;
 
@@ -57,6 +58,11 @@ public class HQLTreeRootExpression extends HQLExpression {
   @Override
   public void accept(HQLNoReturnVisitor visitor) {
     visitor.visit(this);
+  }
+
+  @Override
+  public HQLCollection<HQLToken> children() {
+    return null;
   }
 
   @Override
