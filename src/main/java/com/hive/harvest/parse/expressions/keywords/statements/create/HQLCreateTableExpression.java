@@ -3,6 +3,7 @@ package com.hive.harvest.parse.expressions.keywords.statements.create;
 import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.expressions.HQLExpression;
 import com.hive.harvest.parse.expressions.categories.HQLCreateEntityExpression;
+import com.hive.harvest.parse.expressions.identifiers.HQLFullyQualifiedNameExpression;
 import com.hive.harvest.parse.expressions.keywords.HQLKeywordExpression;
 import com.hive.harvest.parse.expressions.categories.HQLStatementExpression;
 import com.hive.harvest.parse.expressions.keywords.statements.create.tools.HQLEntityType;
@@ -17,7 +18,7 @@ import com.hive.harvest.tools.collections.HQLCollection;
 public class HQLCreateTableExpression extends HQLExpression
   implements HQLStatementExpression, HQLCreateEntityExpression {
 
-  private final HQLIdentifierToken identifier;
+  private final HQLFullyQualifiedNameExpression identifier;
   private final HQLCreateColumnGroupExpression columnGroup;
 
   public HQLCreateTableExpression(HQLExpression parent, HQLLexer lexer) {
@@ -28,10 +29,10 @@ public class HQLCreateTableExpression extends HQLExpression
   }
 
 
-  private HQLIdentifierToken readIdentifier(HQLLexer lexer) {
+  private HQLFullyQualifiedNameExpression readIdentifier(HQLLexer lexer) {
     lexer.readCurrentAndAdvance(HQLIdentifierToken.class, HQLKeywordExpression.CREATE);
     lexer.readCurrentAndAdvance(HQLIdentifierToken.class, HQLKeywordExpression.TABLE);
-    return lexer.readCurrentAndAdvance(HQLIdentifierToken.class);
+    return HQLFullyQualifiedNameExpression.read(this, lexer);
   }
 
   private HQLCreateColumnGroupExpression readColumnGroup(HQLLexer lexer) {
@@ -57,8 +58,8 @@ public class HQLCreateTableExpression extends HQLExpression
     return HQLEntityType.TABLE;
   }
 
-  public String identifier() {
-    return this.identifier.identifier();
+  public HQLFullyQualifiedNameExpression identifier() {
+    return this.identifier;
   }
 
   public HQLCreateColumnGroupExpression columnGroup() {

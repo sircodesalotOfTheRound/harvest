@@ -1,6 +1,8 @@
 package com.hive.harvest.statements;
 
 import com.hive.harvest.command.HQLCommand;
+import com.hive.harvest.parse.expressions.categories.HQLMemberExpression;
+import com.hive.harvest.parse.expressions.identifiers.HQLVariableExpression;
 import com.hive.harvest.parse.expressions.keywords.statements.create.HQLCreateTableExpression;
 import com.hive.harvest.parse.expressions.keywords.statements.create.HQLTypedExpression;
 import com.hive.harvest.parse.expressions.keywords.statements.create.tools.HQLEntityType;
@@ -18,7 +20,22 @@ public class TestCreateExpression {
     HQLCreateTableExpression statement = command.tree().expressions().firstAs(HQLCreateTableExpression.class);
 
     assert (statement.entityType() == HQLEntityType.TABLE);
-    assert (statement.identifier().equals("my_table"));
+    assert (statement.identifier().toString().equals("my_table"));
+  }
+
+  @Test
+  public void testCreateTableWithVariableName() {
+    HQLCommand command = new HQLCommand("create table ${hivevar:namespace.value}");
+    HQLCreateTableExpression statement = command.tree().expressions().firstAs(HQLCreateTableExpression.class);
+
+    assert (statement.entityType() == HQLEntityType.TABLE);
+
+    assert (statement.identifier().members().first() instanceof HQLVariableExpression);
+    assert (statement.identifier().toString().equals("${hivevar:namespace.value}"));
+
+    HQLVariableExpression variable = statement.identifier().members().firstAs(HQLVariableExpression.class);
+    assert (variable.key().toString().equals("hivevar"));
+    assert (variable.value().toString().equals("namespace.value"));
   }
 
   @Test
@@ -42,7 +59,7 @@ public class TestCreateExpression {
     HQLCreateTableExpression statement = command.tree().expressions().firstAs(HQLCreateTableExpression.class);
     HQLCollection<HQLTypedExpression> entries = statement.columnGroup().entries();
 
-    assert (statement.identifier().equals("constrained_table"));
+    assert (statement.identifier().toString().equals("constrained_table"));
 
     assert (entries.first().identifier().toString().equals("first"));
     assert (entries.first().typeConstraint().toString().equals("MAP<INT, STRING>"));
@@ -59,7 +76,7 @@ public class TestCreateExpression {
     HQLTypedExpression column = statement.columnGroup().entries().first();
     HQLTypeConstraintExpression constraint = column.typeConstraint();
 
-    assert (statement.identifier().equals("struct_table"));
+    assert (statement.identifier().toString().equals("struct_table"));
 
     assert (column.identifier().toString().equals("structure"));
     assert (constraint.hasGenericParameters());

@@ -3,6 +3,7 @@ package com.hive.harvest.parse.expressions.identifiers;
 import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.expressions.HQLExpression;
 import com.hive.harvest.parse.expressions.backtracking.HQLIdentifierExpressionBacktrackRule;
+import com.hive.harvest.parse.expressions.backtracking.HQLVariableExpressionBacktrackRule;
 import com.hive.harvest.parse.expressions.backtracking.HQLWildcardExpressionBacktrackRule;
 import com.hive.harvest.parse.expressions.backtracking.interfaces.HQLBacktrackingRuleSet;
 import com.hive.harvest.parse.expressions.categories.HQLMemberExpression;
@@ -18,14 +19,17 @@ import com.hive.harvest.tools.collections.HQLCollection;
 public class HQLFullyQualifiedNameExpression extends HQLExpression {
   private static final HQLBacktrackingRuleSet<HQLMemberExpression> memberTypeRules = new HQLBacktrackingRuleSet<HQLMemberExpression>()
     .add(new HQLIdentifierExpressionBacktrackRule())
+    .add(new HQLVariableExpressionBacktrackRule())
     .add(new HQLWildcardExpressionBacktrackRule());
 
   private final HQLCollection<HQLMemberExpression> members;
+  private final String representation;
 
   public HQLFullyQualifiedNameExpression(HQLExpression parent, HQLLexer lexer) {
     super(parent, lexer);
 
     this.members = this.readMembers(lexer);
+    this.representation = generateRepresentation();
   }
 
   private HQLCollection<HQLMemberExpression> readMembers(HQLLexer lexer) {
@@ -47,6 +51,18 @@ public class HQLFullyQualifiedNameExpression extends HQLExpression {
     return identifiers;
   }
 
+  public String generateRepresentation() {
+    StringBuilder builder = new StringBuilder();
+    for (HQLMemberExpression member : members) {
+      if (builder.length() > 0) {
+        builder.append(".");
+      }
+      builder.append(member);
+    }
+
+    return builder.toString();
+  }
+
   public HQLCollection<HQLMemberExpression> members() {
     return this.members;
   }
@@ -66,4 +82,8 @@ public class HQLFullyQualifiedNameExpression extends HQLExpression {
     return new HQLFullyQualifiedNameExpression(parent, lexer);
   }
 
+  @Override
+  public String toString() {
+    return this.representation;
+  }
 }
