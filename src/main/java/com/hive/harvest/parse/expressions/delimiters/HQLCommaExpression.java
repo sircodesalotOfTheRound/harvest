@@ -5,7 +5,6 @@ import com.hive.harvest.parse.expressions.HQLExpression;
 import com.hive.harvest.parse.expressions.categories.HQLDelimiterExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLPunctuationToken;
-import com.hive.harvest.parse.tokens.HQLToken;
 import com.hive.harvest.tools.collections.HQLCollection;
 
 /**
@@ -30,7 +29,7 @@ public class HQLCommaExpression extends HQLExpression implements HQLDelimiterExp
   }
 
   @Override
-  public HQLCollection<HQLToken> children() {
+  public HQLCollection<HQLExpression> children() {
     return HQLCollection.EMPTY;
   }
 

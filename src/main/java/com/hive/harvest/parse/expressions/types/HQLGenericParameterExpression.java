@@ -6,7 +6,7 @@ import com.hive.harvest.parse.expressions.primitive.HQLIdentifierExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLIdentifierToken;
 import com.hive.harvest.parse.tokens.HQLPunctuationToken;
-import com.hive.harvest.parse.tokens.HQLToken;
+import com.hive.harvest.tools.collections.HQLAppendableCollection;
 import com.hive.harvest.tools.collections.HQLCollection;
 
 /**
@@ -16,6 +16,7 @@ public class HQLGenericParameterExpression extends HQLExpression {
   private final HQLIdentifierExpression identifier;
   private final HQLTypeConstraintExpression typeConstraint;
   private final String representation;
+  private final HQLCollection<HQLExpression> children;
 
   public HQLGenericParameterExpression(HQLExpression parent, HQLLexer lexer) {
     super(parent, lexer);
@@ -23,6 +24,7 @@ public class HQLGenericParameterExpression extends HQLExpression {
     this.identifier = readIdentifier(lexer);
     this.typeConstraint = readType(lexer);
     this.representation = generateRepresentation();
+    this.children = new HQLAppendableCollection<HQLExpression>(identifier, typeConstraint);
   }
 
 
@@ -67,8 +69,8 @@ public class HQLGenericParameterExpression extends HQLExpression {
   }
 
   @Override
-  public HQLCollection<HQLToken> children() {
-    return null;
+  public HQLCollection<HQLExpression> children() {
+    return this.children;
   }
 
   public static HQLGenericParameterExpression read(HQLExpression parent, HQLLexer lexer) {

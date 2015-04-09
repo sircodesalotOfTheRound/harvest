@@ -7,7 +7,6 @@ import com.hive.harvest.parse.expressions.keywords.HQLKeywordExpression;
 import com.hive.harvest.parse.expressions.tables.HQLTableSetExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLIdentifierToken;
-import com.hive.harvest.parse.tokens.HQLToken;
 import com.hive.harvest.tools.collections.HQLCollection;
 
 /**
@@ -28,7 +27,7 @@ public class HQLFromExpression extends HQLKeywordExpression implements HQLStatem
   }
 
   @Override
-  public HQLCollection<HQLToken> children() {
+  public HQLCollection<HQLExpression> children() {
     return null;
   }
 

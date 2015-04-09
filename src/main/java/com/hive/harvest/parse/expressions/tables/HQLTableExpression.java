@@ -4,7 +4,6 @@ import com.hive.harvest.parse.expressions.HQLExpression;
 import com.hive.harvest.parse.expressions.backtracking.HQLNamedTableExpressionBacktrackRule;
 import com.hive.harvest.parse.expressions.backtracking.interfaces.HQLBacktrackingRuleSet;
 import com.hive.harvest.parse.lexer.HQLLexer;
-import com.hive.harvest.parse.tokens.HQLToken;
 import com.hive.harvest.tools.collections.HQLCollection;
 
 /**
@@ -19,7 +18,7 @@ public abstract class HQLTableExpression extends HQLExpression {
   }
 
   @Override
-  public HQLCollection<HQLToken> children() {
+  public HQLCollection<HQLExpression> children() {
     return null;
   }
 

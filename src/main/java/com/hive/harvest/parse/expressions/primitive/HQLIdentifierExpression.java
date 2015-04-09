@@ -4,11 +4,10 @@ import com.hive.harvest.exceptions.HQLException;
 import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.expressions.HQLExpression;
 import com.hive.harvest.parse.expressions.categories.HQLMemberExpression;
-import com.hive.harvest.parse.expressions.identifiers.HQLFullyQualifiedNameExpression;
 import com.hive.harvest.parse.expressions.types.HQLGenericParameterListExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLIdentifierToken;
-import com.hive.harvest.parse.tokens.HQLToken;
+import com.hive.harvest.tools.collections.HQLAppendableCollection;
 import com.hive.harvest.tools.collections.HQLCollection;
 
 /**
@@ -18,6 +17,7 @@ public class HQLIdentifierExpression extends HQLExpression implements HQLMemberE
   private final HQLIdentifierToken identifier;
   private final HQLGenericParameterListExpression genericParameters;
   private final String representation;
+  private final HQLCollection<HQLExpression> children;
 
   public HQLIdentifierExpression(HQLExpression parent, HQLLexer lexer) {
     super(parent, lexer);
@@ -25,6 +25,7 @@ public class HQLIdentifierExpression extends HQLExpression implements HQLMemberE
     this.identifier = readIdentifier(lexer);
     this.genericParameters = readGenericParameters(lexer);
     this.representation = generateRepresentation();
+    this.children = new HQLAppendableCollection<HQLExpression>(genericParameters);
   }
 
   private HQLIdentifierToken readIdentifier(HQLLexer lexer) {
@@ -70,8 +71,8 @@ public class HQLIdentifierExpression extends HQLExpression implements HQLMemberE
   }
 
   @Override
-  public HQLCollection<HQLToken> children() {
-    return null;
+  public HQLCollection<HQLExpression> children() {
+    return this.children;
   }
 
   public static HQLIdentifierExpression read(HQLExpression parent, HQLLexer lexer) {

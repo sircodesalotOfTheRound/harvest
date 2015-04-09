@@ -11,11 +11,12 @@ import com.hive.harvest.parse.expressions.root.HQLTreeRootExpression;
 import com.hive.harvest.parse.expressions.tables.HQLNamedTableExpression;
 import com.hive.harvest.parse.expressions.tables.HQLTableSetExpression;
 import com.hive.harvest.parse.expressions.unknown.HQLUnknownExpression;
+import com.hive.harvest.parse.tokens.HQLToken;
 
 /**
  * Created by sircodesalot on 15/4/3.
  */
-public class HQLTreeWriter extends HQLNoReturnVisitor {
+public class HQLTreeWriter {
   private int indent;
   private StringBuilder builder;
 
@@ -23,7 +24,7 @@ public class HQLTreeWriter extends HQLNoReturnVisitor {
     this.builder = createStringBuilder(command);
     this.indent = 0;
 
-    this.accept(expression);
+    this.processExpression(expression);
   }
 
   private StringBuilder createStringBuilder(String command) {
@@ -35,89 +36,26 @@ public class HQLTreeWriter extends HQLNoReturnVisitor {
   private void increateIndent() {
     this.indent += 2;
   }
-
   private void decreaseIndent() {
     this.indent -= 2;
   }
 
-  @Override
-  public void visit(HQLFromExpression expression) {
+  public void processExpression(HQLExpression expression) {
+    if (expression == null) return;
+
+    this.display(expression);
+
     this.increateIndent();
-    this.onvisited(expression);
-    this.acceptAll(expression.tableSet().tables());
+    if (expression.children() == null) {
+      System.out.println(expression.getClass());
+    }
+    for (HQLExpression child : expression.children()) {
+      processExpression(child);
+    }
     this.decreaseIndent();
   }
 
-  @Override
-  public void visit(HQLIdentifierExpression expression) {
-    this.increateIndent();
-    this.onvisited(expression);
-    this.decreaseIndent();
-  }
-
-  @Override
-  public void visit(HQLNamedTableExpression expression) {
-    this.increateIndent();
-    this.onvisited(expression);
-    this.decreaseIndent();
-  }
-
-  @Override
-  public void visit(HQLUnknownExpression expression) {
-    this.increateIndent();
-    this.onvisited(expression);
-    this.decreaseIndent();
-  }
-
-  @Override
-  public void visit(HQLTreeRootExpression expression) {
-    this.increateIndent();
-    this.onvisited(expression);
-    this.acceptAll(expression.expressions());
-    this.decreaseIndent();
-  }
-
-  @Override
-  public void visit(HQLTableSetExpression expression) {
-    this.increateIndent();
-    this.onvisited(expression);
-    this.acceptAll(expression.tables());
-    this.decreaseIndent();
-  }
-
-  @Override
-  public void visit(HQLSelectStatement expression) {
-    this.increateIndent();
-    this.onvisited(expression);
-    this.accept(expression.columnSet());
-    this.accept(expression.from());
-    this.decreaseIndent();
-  }
-
-  @Override
-  public void visit(HQLColumnSetExpression expression) {
-    this.increateIndent();
-    this.onvisited(expression);
-    this.acceptAll(expression.columns());
-    this.decreaseIndent();
-  }
-
-  @Override
-  public void visit(HQLWildcardExpression expression) {
-    this.increateIndent();
-    this.onvisited(expression);
-    this.decreaseIndent();
-  }
-
-  @Override
-  public void visit(HQLNamedColumnExpression expression) {
-    this.increateIndent();
-    this.onvisited(expression);
-    this.decreaseIndent();
-  }
-
-  @Override
-  protected void onvisited(HQLExpression expression) {
+  private void display(HQLExpression expression) {
     String content = String.format("%s%-20s : %s", this.getIndent(), expression, expression.getClass().getSimpleName());
     builder.append(content).append("\n");
   }

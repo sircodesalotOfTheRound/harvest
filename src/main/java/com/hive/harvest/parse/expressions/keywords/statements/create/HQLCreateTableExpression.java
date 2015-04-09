@@ -9,7 +9,7 @@ import com.hive.harvest.parse.expressions.categories.HQLStatementExpression;
 import com.hive.harvest.parse.expressions.keywords.statements.create.tools.HQLEntityType;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLIdentifierToken;
-import com.hive.harvest.parse.tokens.HQLToken;
+import com.hive.harvest.tools.collections.HQLAppendableCollection;
 import com.hive.harvest.tools.collections.HQLCollection;
 
 /**
@@ -17,15 +17,18 @@ import com.hive.harvest.tools.collections.HQLCollection;
  */
 public class HQLCreateTableExpression extends HQLExpression
   implements HQLStatementExpression, HQLCreateEntityExpression {
+  private final String CREATE_TABLE = String.format("(%s %s)", HQLKeywordExpression.CREATE, HQLKeywordExpression.TABLE);
 
   private final HQLFullyQualifiedNameExpression identifier;
   private final HQLCreateColumnGroupExpression columnGroup;
+  private final HQLCollection<HQLExpression> children;
 
   public HQLCreateTableExpression(HQLExpression parent, HQLLexer lexer) {
     super(parent, lexer);
 
     this.identifier = this.readIdentifier(lexer);
     this.columnGroup = this.readColumnGroup(lexer);
+    this.children = new HQLAppendableCollection<HQLExpression>(identifier, columnGroup);
   }
 
 
@@ -49,8 +52,8 @@ public class HQLCreateTableExpression extends HQLExpression
   }
 
   @Override
-  public HQLCollection<HQLToken> children() {
-    return null;
+  public HQLCollection<HQLExpression> children() {
+    return this.children;
   }
 
   @Override
@@ -68,5 +71,10 @@ public class HQLCreateTableExpression extends HQLExpression
 
   public static HQLCreateTableExpression read(HQLExpression parent, HQLLexer lexer) {
     return new HQLCreateTableExpression(parent, lexer);
+  }
+
+  @Override
+  public String toString() {
+    return CREATE_TABLE;
   }
 }

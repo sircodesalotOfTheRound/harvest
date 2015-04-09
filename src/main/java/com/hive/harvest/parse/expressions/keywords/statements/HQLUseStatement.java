@@ -6,7 +6,6 @@ import com.hive.harvest.parse.expressions.categories.HQLStatementExpression;
 import com.hive.harvest.parse.expressions.keywords.HQLKeywordExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLIdentifierToken;
-import com.hive.harvest.parse.tokens.HQLToken;
 import com.hive.harvest.tools.collections.HQLCollection;
 
 /**
@@ -37,7 +36,7 @@ public class HQLUseStatement extends HQLExpression implements HQLStatementExpres
   }
 
   @Override
-  public HQLCollection<HQLToken> children() {
+  public HQLCollection<HQLExpression> children() {
     return null;
   }
 

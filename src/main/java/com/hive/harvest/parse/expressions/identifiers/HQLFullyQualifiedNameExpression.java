@@ -9,7 +9,6 @@ import com.hive.harvest.parse.expressions.backtracking.interfaces.HQLBacktrackin
 import com.hive.harvest.parse.expressions.categories.HQLMemberExpression;
 import com.hive.harvest.parse.expressions.delimiters.HQLDotExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
-import com.hive.harvest.parse.tokens.HQLToken;
 import com.hive.harvest.tools.collections.HQLAppendableCollection;
 import com.hive.harvest.tools.collections.HQLCollection;
 
@@ -74,8 +73,8 @@ public class HQLFullyQualifiedNameExpression extends HQLExpression {
   }
 
   @Override
-  public HQLCollection<HQLToken> children() {
-    return null;
+  public HQLCollection<HQLExpression> children() {
+    return members.castTo(HQLExpression.class);
   }
 
   public static HQLFullyQualifiedNameExpression read(HQLExpression parent, HQLLexer lexer) {

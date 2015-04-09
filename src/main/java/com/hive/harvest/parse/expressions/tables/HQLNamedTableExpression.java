@@ -5,7 +5,6 @@ import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.expressions.HQLExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLIdentifierToken;
-import com.hive.harvest.parse.tokens.HQLToken;
 import com.hive.harvest.tools.collections.HQLCollection;
 
 /**
@@ -27,7 +26,7 @@ public class HQLNamedTableExpression extends HQLTableExpression {
   }
 
   @Override
-  public HQLCollection<HQLToken> children() {
+  public HQLCollection<HQLExpression> children() {
     return null;
   }
 

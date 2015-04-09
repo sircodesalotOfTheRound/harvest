@@ -5,7 +5,6 @@ import com.hive.harvest.parse.expressions.delimiters.HQLCommaExpression;
 import com.hive.harvest.parse.expressions.HQLExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLPunctuationToken;
-import com.hive.harvest.parse.tokens.HQLToken;
 import com.hive.harvest.tools.collections.HQLAppendableCollection;
 import com.hive.harvest.tools.collections.HQLCollection;
 
@@ -13,6 +12,7 @@ import com.hive.harvest.tools.collections.HQLCollection;
  * Created by sircodesalot on 15/4/9.
  */
 public class HQLCreateColumnGroupExpression extends HQLExpression {
+  private static final String COLUMN_GROUP = "(COLUMN GROUP)";
   private final HQLCollection<HQLCreateTypedColumnExpression> entries;
 
   public HQLCreateColumnGroupExpression(HQLExpression parent, HQLLexer lexer) {
@@ -53,8 +53,8 @@ public class HQLCreateColumnGroupExpression extends HQLExpression {
   }
 
   @Override
-  public HQLCollection<HQLToken> children() {
-    return null;
+  public HQLCollection<HQLExpression> children() {
+    return this.entries.castTo(HQLExpression.class);
   }
 
   public static HQLCreateColumnGroupExpression read(HQLExpression parent, HQLLexer lexer) {
@@ -63,5 +63,10 @@ public class HQLCreateColumnGroupExpression extends HQLExpression {
 
   public static boolean canRead(HQLCreateTableExpression expression, HQLLexer lexer) {
     return lexer.currentIs(HQLPunctuationToken.class, HQLPunctuationToken.OPEN_PARENS);
+  }
+
+  @Override
+  public String toString() {
+    return COLUMN_GROUP;
   }
 }

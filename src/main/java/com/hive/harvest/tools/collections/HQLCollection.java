@@ -1,5 +1,6 @@
 package com.hive.harvest.tools.collections;
 
+import com.hive.harvest.parse.expressions.HQLExpression;
 import com.hive.harvest.parse.tokens.HQLToken;
 
 import java.util.ArrayList;
@@ -13,10 +14,10 @@ import java.util.function.Predicate;
  * Created by sircodesalot on 15/4/3.
  */
 public abstract class HQLCollection<T> implements Iterable<T> {
-  public static final HQLCollection<HQLToken> EMPTY = new HQLCollection<HQLToken>() {
-    private final List<HQLToken> emptyList = new ArrayList<HQLToken>();
+  public static final HQLCollection<HQLExpression> EMPTY = new HQLCollection<HQLExpression>() {
+    private final List<HQLExpression> emptyList = new ArrayList<HQLExpression>();
     @Override
-    public Iterable<HQLToken> items() {
+    public Iterable<HQLExpression> items() {
       return emptyList;
     }
   };

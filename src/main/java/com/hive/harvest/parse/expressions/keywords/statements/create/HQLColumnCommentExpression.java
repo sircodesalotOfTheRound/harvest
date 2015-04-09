@@ -6,7 +6,7 @@ import com.hive.harvest.parse.expressions.keywords.HQLKeywordExpression;
 import com.hive.harvest.parse.expressions.variables.HQLStringExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLIdentifierToken;
-import com.hive.harvest.parse.tokens.HQLToken;
+import com.hive.harvest.tools.collections.HQLAppendableCollection;
 import com.hive.harvest.tools.collections.HQLCollection;
 
 /**
@@ -32,8 +32,8 @@ public class HQLColumnCommentExpression extends HQLExpression {
   }
 
   @Override
-  public HQLCollection<HQLToken> children() {
-    return null;
+  public HQLCollection<HQLExpression> children() {
+    return new HQLAppendableCollection<HQLExpression>(comment);
   }
 
   public static boolean canRead(HQLExpression parent, HQLLexer lexer) {
@@ -50,6 +50,6 @@ public class HQLColumnCommentExpression extends HQLExpression {
 
   @Override
   public String toString() {
-    return String.format("COMMENT %s", comment);
+    return String.format("COMMENT '%s'", comment);
   }
 }

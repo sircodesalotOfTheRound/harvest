@@ -1,11 +1,9 @@
 package com.hive.harvest.parse.expressions.keywords;
 
 import com.hive.harvest.exceptions.HQLException;
-import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.expressions.HQLExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLIdentifierToken;
-import com.hive.harvest.parse.tokens.HQLToken;
 import com.hive.harvest.tools.collections.HQLCollection;
 
 import java.util.HashSet;
@@ -35,7 +33,7 @@ public abstract class HQLKeywordExpression extends HQLExpression {
   }
 
   @Override
-  public HQLCollection<HQLToken> children() {
+  public HQLCollection<HQLExpression> children() {
     return null;
   }
 

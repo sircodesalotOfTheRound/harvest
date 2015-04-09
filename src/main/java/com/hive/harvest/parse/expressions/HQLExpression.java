@@ -32,5 +32,5 @@ public abstract class HQLExpression extends HQLToken {
 
   public abstract void accept(HQLNoReturnVisitor visitor);
 
-  public abstract HQLCollection<HQLToken> children();
+  public abstract HQLCollection<HQLExpression> children();
 }

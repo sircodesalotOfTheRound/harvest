@@ -68,8 +68,8 @@ public class HQLStringExpression extends HQLExpression {
   }
 
   @Override
-  public HQLCollection<HQLToken> children() {
-    return null;
+  public HQLCollection<HQLExpression> children() {
+    return this.contents.ofType(HQLExpression.class);
   }
 
   public static HQLStringExpression read(HQLExpression parent, HQLLexer lexer) {

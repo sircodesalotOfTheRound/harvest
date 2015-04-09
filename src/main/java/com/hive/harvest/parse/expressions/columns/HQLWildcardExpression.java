@@ -26,7 +26,7 @@ public class HQLWildcardExpression extends HQLColumnExpression implements HQLMem
   }
 
   @Override
-  public HQLCollection<HQLToken> children() {
+  public HQLCollection<HQLExpression> children() {
     return null;
   }
 

@@ -24,7 +24,7 @@ public class HQLUnknownExpression extends HQLExpression {
   }
 
   @Override
-  public HQLCollection<HQLToken> children() {
+  public HQLCollection<HQLExpression> children() {
     return null;
   }
 

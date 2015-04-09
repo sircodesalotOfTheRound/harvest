@@ -5,7 +5,6 @@ import com.hive.harvest.parse.expressions.backtracking.HQLNamedColumnExpressionB
 import com.hive.harvest.parse.expressions.backtracking.HQLWildcardExpressionBacktrackRule;
 import com.hive.harvest.parse.expressions.backtracking.interfaces.HQLBacktrackingRuleSet;
 import com.hive.harvest.parse.lexer.HQLLexer;
-import com.hive.harvest.parse.tokens.HQLToken;
 import com.hive.harvest.tools.collections.HQLCollection;
 
 /**
@@ -21,7 +20,7 @@ public abstract class HQLColumnExpression extends HQLExpression {
   }
 
   @Override
-  public HQLCollection<HQLToken> children() {
+  public HQLCollection<HQLExpression> children() {
     return null;
   }
 

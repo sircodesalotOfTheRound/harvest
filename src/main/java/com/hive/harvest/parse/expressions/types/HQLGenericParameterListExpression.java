@@ -5,7 +5,6 @@ import com.hive.harvest.parse.expressions.HQLExpression;
 import com.hive.harvest.parse.expressions.delimiters.HQLCommaExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLPunctuationToken;
-import com.hive.harvest.parse.tokens.HQLToken;
 import com.hive.harvest.tools.collections.HQLAppendableCollection;
 import com.hive.harvest.tools.collections.HQLCollection;
 
@@ -70,8 +69,8 @@ public class HQLGenericParameterListExpression extends HQLExpression {
   }
 
   @Override
-  public HQLCollection<HQLToken> children() {
-    return null;
+  public HQLCollection<HQLExpression> children() {
+    return this.entries.castTo(HQLExpression.class);
   }
 
   public static HQLGenericParameterListExpression read(HQLExpression parent, HQLLexer lexer) {

@@ -63,7 +63,7 @@ public class HQLShellStatementExpression extends HQLExpression implements HQLSta
   }
 
   @Override
-  public HQLCollection<HQLToken> children() {
+  public HQLCollection<HQLExpression> children() {
     return null;
   }
 
