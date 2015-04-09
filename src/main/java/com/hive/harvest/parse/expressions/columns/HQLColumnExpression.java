@@ -1,10 +1,9 @@
 package com.hive.harvest.parse.expressions.columns;
 
-import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.expressions.HQLExpression;
 import com.hive.harvest.parse.expressions.backtracking.HQLNamedColumnExpressionBacktrackRule;
 import com.hive.harvest.parse.expressions.backtracking.HQLWildcardColumnExpressionBacktrackRule;
-import com.hive.harvest.parse.expressions.backtracking.interfaces.BacktrackRuleSet;
+import com.hive.harvest.parse.expressions.backtracking.interfaces.HQLBacktrackingRuleSet;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLToken;
 import com.hive.harvest.tools.collections.HQLCollection;
@@ -13,7 +12,7 @@ import com.hive.harvest.tools.collections.HQLCollection;
  * Created by sircodesalot on 15/4/3.
  */
 public abstract class HQLColumnExpression extends HQLExpression {
-  private static final BacktrackRuleSet<HQLColumnExpression> rules = new BacktrackRuleSet<HQLColumnExpression>()
+  private static final HQLBacktrackingRuleSet<HQLColumnExpression> rules = new HQLBacktrackingRuleSet<HQLColumnExpression>()
     .add(new HQLNamedColumnExpressionBacktrackRule())
     .add(new HQLWildcardColumnExpressionBacktrackRule());
 

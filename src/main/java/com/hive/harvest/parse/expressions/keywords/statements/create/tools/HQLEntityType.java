@@ -25,7 +25,7 @@ public enum HQLEntityType {
   }
 
   private static Map<String, HQLEntityType> generateEntityTypes() {
-    Map<String, HQLEntityType> set = new HashMap<>();
+    Map<String, HQLEntityType> set = new HashMap<String, HQLEntityType>();
     set.put(TABLE.toString(), TABLE);
 
     return set;

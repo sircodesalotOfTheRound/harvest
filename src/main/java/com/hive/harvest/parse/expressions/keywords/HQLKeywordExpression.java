@@ -23,6 +23,7 @@ public abstract class HQLKeywordExpression extends HQLExpression {
   public static final String USE = "USE";
   public static final String CREATE = "CREATE";
   public static final String DROP = "DROP";
+  public static final String TABLE = "TABLE";
 
   private final HQLIdentifierToken token;
 

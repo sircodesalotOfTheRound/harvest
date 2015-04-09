@@ -9,14 +9,14 @@ import com.hive.harvest.tools.OneToManyMap;
 /**
  * Created by sircodesalot on 15/4/2.
  */
-public class BacktrackRuleSet<TExpressionType> {
+public class HQLBacktrackingRuleSet<TExpressionType> {
   private final OneToManyMap<Class, HQLBacktrackRule> rules;
 
-  public BacktrackRuleSet() {
+  public HQLBacktrackingRuleSet() {
     this.rules = new OneToManyMap<Class, HQLBacktrackRule>();
   }
 
-  public BacktrackRuleSet<TExpressionType> add(HQLBacktrackRule rule) {
+  public HQLBacktrackingRuleSet<TExpressionType> add(HQLBacktrackRule rule) {
     // Ensure that we launch this rule for polymorphic derivations of the token type.
     // For example, two tokens may share the same base class. So a backtrack rule may
     // choose to listen for that.

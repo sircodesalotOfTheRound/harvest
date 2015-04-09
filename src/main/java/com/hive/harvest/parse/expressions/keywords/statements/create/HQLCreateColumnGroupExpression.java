@@ -4,7 +4,6 @@ import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.expressions.delimiters.HQLCommaExpression;
 import com.hive.harvest.parse.expressions.HQLExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
-import com.hive.harvest.parse.tokens.HQLIdentifierToken;
 import com.hive.harvest.parse.tokens.HQLPunctuationToken;
 import com.hive.harvest.parse.tokens.HQLToken;
 import com.hive.harvest.tools.collections.HQLAppendableCollection;
@@ -62,8 +61,7 @@ public class HQLCreateColumnGroupExpression extends HQLExpression {
     return new HQLCreateColumnGroupExpression(parent, lexer);
   }
 
-  public static boolean canRead(HQLCreateEntityStatement expression, HQLLexer lexer) {
-    // TODO: Actually check this properly
+  public static boolean canRead(HQLCreateTableExpression expression, HQLLexer lexer) {
     return lexer.currentIs(HQLPunctuationToken.class, HQLPunctuationToken.OPEN_PARENS);
   }
 }

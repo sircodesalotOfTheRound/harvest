@@ -2,8 +2,8 @@ package com.hive.harvest.parse.expressions.keywords.statements;
 
 import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.expressions.HQLExpression;
+import com.hive.harvest.parse.expressions.categories.HQLStatementExpression;
 import com.hive.harvest.parse.expressions.keywords.HQLKeywordExpression;
-import com.hive.harvest.parse.expressions.tables.HQLTableExpression;
 import com.hive.harvest.parse.expressions.tables.HQLTableSetExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLIdentifierToken;

@@ -3,7 +3,8 @@ package com.hive.harvest.parse.expressions.root;
 import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.expressions.HQLExpression;
 import com.hive.harvest.parse.expressions.backtracking.*;
-import com.hive.harvest.parse.expressions.backtracking.interfaces.BacktrackRuleSet;
+import com.hive.harvest.parse.expressions.backtracking.create.HQLCreateTableBacktrackRule;
+import com.hive.harvest.parse.expressions.backtracking.interfaces.HQLBacktrackingRuleSet;
 import com.hive.harvest.parse.expressions.unknown.HQLUnknownExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLToken;
@@ -15,11 +16,11 @@ import com.hive.harvest.tools.collections.HQLCollection;
  */
 public class HQLTreeRootExpression extends HQLExpression {
   private static final String ROOT = "(ROOT)";
-  private static final BacktrackRuleSet<HQLExpression> rules = new BacktrackRuleSet<HQLExpression>()
+  private static final HQLBacktrackingRuleSet<HQLExpression> rules = new HQLBacktrackingRuleSet<HQLExpression>()
     .add(new HQLSelectStatementBacktrackRule())
     .add(new HQLFromExpressionBacktrackRule())
     .add(new HQLUseStatementBacktrackRule())
-    .add(new HQLCreateStatementBacktrackRule())
+    .add(new HQLCreateTableBacktrackRule())
     .add(new HQLDropEntityStatementBacktrackRule())
     .add(new HQLShellStatementBacktrackRule());
 
@@ -33,7 +34,7 @@ public class HQLTreeRootExpression extends HQLExpression {
   }
 
   private HQLCollection<HQLExpression> readExpressions(HQLLexer lexer) {
-    HQLAppendableCollection<HQLExpression> expressions = new HQLAppendableCollection<>();
+    HQLAppendableCollection<HQLExpression> expressions = new HQLAppendableCollection<HQLExpression>();
     while (!lexer.isEof()) {
       HQLExpression expression = rules.read(this, lexer);
 

@@ -2,8 +2,9 @@ package com.hive.harvest.parse.expressions.keywords.statements.create;
 
 import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.expressions.HQLExpression;
+import com.hive.harvest.parse.expressions.categories.HQLCreateEntityExpression;
 import com.hive.harvest.parse.expressions.keywords.HQLKeywordExpression;
-import com.hive.harvest.parse.expressions.keywords.statements.HQLStatementExpression;
+import com.hive.harvest.parse.expressions.categories.HQLStatementExpression;
 import com.hive.harvest.parse.expressions.keywords.statements.create.tools.HQLEntityType;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLIdentifierToken;
@@ -13,30 +14,23 @@ import com.hive.harvest.tools.collections.HQLCollection;
 /**
  * Created by sircodesalot on 15/4/7.
  */
-public class HQLCreateEntityStatement extends HQLExpression implements HQLStatementExpression {
-  private final HQLEntityType entityType;
+public class HQLCreateTableExpression extends HQLExpression
+  implements HQLStatementExpression, HQLCreateEntityExpression {
+
   private final HQLIdentifierToken identifier;
   private final HQLCreateColumnGroupExpression columnGroup;
 
-  public HQLCreateEntityStatement(HQLExpression parent, HQLLexer lexer) {
+  public HQLCreateTableExpression(HQLExpression parent, HQLLexer lexer) {
     super(parent, lexer);
 
-    this.entityType = this.readHQLEntityType(lexer);
     this.identifier = this.readIdentifier(lexer);
     this.columnGroup = this.readColumnGroup(lexer);
   }
 
-  private HQLEntityType readHQLEntityType(HQLLexer lexer) {
-    lexer.readCurrentAndAdvance(HQLIdentifierToken.class, HQLKeywordExpression.CREATE);
-
-    if (HQLEntityType.isValidEntityType((HQLIdentifierToken) lexer.current())) {
-      return HQLEntityType.fromIdentifierToken(lexer.readCurrentAndAdvance(HQLIdentifierToken.class));
-    } else {
-      return null;
-    }
-  }
 
   private HQLIdentifierToken readIdentifier(HQLLexer lexer) {
+    lexer.readCurrentAndAdvance(HQLIdentifierToken.class, HQLKeywordExpression.CREATE);
+    lexer.readCurrentAndAdvance(HQLIdentifierToken.class, HQLKeywordExpression.TABLE);
     return lexer.readCurrentAndAdvance(HQLIdentifierToken.class);
   }
 
@@ -58,8 +52,9 @@ public class HQLCreateEntityStatement extends HQLExpression implements HQLStatem
     return null;
   }
 
+  @Override
   public HQLEntityType entityType() {
-    return this.entityType;
+    return HQLEntityType.TABLE;
   }
 
   public String identifier() {
@@ -70,7 +65,7 @@ public class HQLCreateEntityStatement extends HQLExpression implements HQLStatem
     return this.columnGroup;
   }
 
-  public static HQLCreateEntityStatement read(HQLExpression parent, HQLLexer lexer) {
-    return new HQLCreateEntityStatement(parent, lexer);
+  public static HQLCreateTableExpression read(HQLExpression parent, HQLLexer lexer) {
+    return new HQLCreateTableExpression(parent, lexer);
   }
 }

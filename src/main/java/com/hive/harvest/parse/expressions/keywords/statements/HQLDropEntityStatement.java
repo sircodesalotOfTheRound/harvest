@@ -1,17 +1,14 @@
 package com.hive.harvest.parse.expressions.keywords.statements;
 
-import com.hive.harvest.exceptions.HQLException;
 import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.expressions.HQLExpression;
+import com.hive.harvest.parse.expressions.categories.HQLStatementExpression;
 import com.hive.harvest.parse.expressions.keywords.HQLKeywordExpression;
 import com.hive.harvest.parse.expressions.keywords.statements.create.tools.HQLEntityType;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLIdentifierToken;
 import com.hive.harvest.parse.tokens.HQLToken;
 import com.hive.harvest.tools.collections.HQLCollection;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by sircodesalot on 15/4/7.
