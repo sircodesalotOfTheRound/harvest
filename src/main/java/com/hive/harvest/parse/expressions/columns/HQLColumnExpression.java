@@ -2,7 +2,7 @@ package com.hive.harvest.parse.expressions.columns;
 
 import com.hive.harvest.parse.expressions.HQLExpression;
 import com.hive.harvest.parse.expressions.backtracking.HQLNamedColumnExpressionBacktrackRule;
-import com.hive.harvest.parse.expressions.backtracking.HQLWildcardColumnExpressionBacktrackRule;
+import com.hive.harvest.parse.expressions.backtracking.HQLWildcardExpressionBacktrackRule;
 import com.hive.harvest.parse.expressions.backtracking.interfaces.HQLBacktrackingRuleSet;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLToken;
@@ -14,7 +14,7 @@ import com.hive.harvest.tools.collections.HQLCollection;
 public abstract class HQLColumnExpression extends HQLExpression {
   private static final HQLBacktrackingRuleSet<HQLColumnExpression> rules = new HQLBacktrackingRuleSet<HQLColumnExpression>()
     .add(new HQLNamedColumnExpressionBacktrackRule())
-    .add(new HQLWildcardColumnExpressionBacktrackRule());
+    .add(new HQLWildcardExpressionBacktrackRule());
 
   public HQLColumnExpression(HQLExpression parent, HQLLexer lexer) {
     super(parent, lexer);
@@ -34,7 +34,7 @@ public abstract class HQLColumnExpression extends HQLExpression {
   }
 
   public boolean isWildcardColumn() {
-    return this instanceof HQLWildcardColumnExpression;
+    return this instanceof HQLWildcardExpression;
   }
 
   public boolean isNamedColumn() {

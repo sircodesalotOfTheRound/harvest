@@ -2,7 +2,7 @@ package com.hive.harvest.statements;
 
 import com.hive.harvest.parse.expressions.tables.HQLNamedTableExpression;
 import com.hive.harvest.parse.expressions.columns.HQLNamedColumnExpression;
-import com.hive.harvest.parse.expressions.columns.HQLWildcardColumnExpression;
+import com.hive.harvest.parse.expressions.columns.HQLWildcardExpression;
 import com.hive.harvest.parse.expressions.keywords.statements.HQLSelectStatement;
 import com.hive.harvest.parse.expressions.root.HQLTreeRootExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
@@ -26,10 +26,10 @@ public class TestHQLSelectStatement {
     final Set<String> columnNames = fillSet("first", "second", "third", "fourth");
     final Set<String> tableNames = fillSet("table1", "table2");
 
-    assert (select.columnSet().columns().size() == 5);
-    assert (select.columnSet().columns().ofType(HQLWildcardColumnExpression.class).size() == 1);
-    assert (select.columnSet().columns().ofType(HQLNamedColumnExpression.class).size() == 4);
-    assert (select.from().tableSet().tables().size() == 2);
+    assert (select.columnSet().columns().count() == 5);
+    assert (select.columnSet().columns().ofType(HQLWildcardExpression.class).count() == 1);
+    assert (select.columnSet().columns().ofType(HQLNamedColumnExpression.class).count() == 4);
+    assert (select.from().tableSet().tables().count() == 2);
 
     boolean areAllColumnsContainedInTheSetAbove = select.columnSet().columns()
       .ofType(HQLNamedColumnExpression.class)

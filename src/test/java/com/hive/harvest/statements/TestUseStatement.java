@@ -12,7 +12,7 @@ public class TestUseStatement {
   public void testUseStatement() {
     HQLCommand command = new HQLCommand("use my_database");
 
-    assert (command.tree().expressions().size() == 1);
+    assert (command.tree().expressions().count() == 1);
     HQLUseStatement statement = command.tree().expressions().firstAs(HQLUseStatement.class);
 
     assert (statement.identifier().equals("my_database"));

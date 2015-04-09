@@ -3,6 +3,8 @@ package com.hive.harvest.parse.expressions.primitive;
 import com.hive.harvest.exceptions.HQLException;
 import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.expressions.HQLExpression;
+import com.hive.harvest.parse.expressions.categories.HQLMemberExpression;
+import com.hive.harvest.parse.expressions.identifiers.HQLFullyQualifiedNameExpression;
 import com.hive.harvest.parse.expressions.types.HQLGenericParameterListExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLIdentifierToken;
@@ -12,7 +14,7 @@ import com.hive.harvest.tools.collections.HQLCollection;
 /**
  * Created by sircodesalot on 15/4/2.
  */
-public class HQLIdentifierExpression extends HQLExpression {
+public class HQLIdentifierExpression extends HQLExpression implements HQLMemberExpression {
   private final HQLIdentifierToken identifier;
   private final HQLGenericParameterListExpression genericParameters;
   private final String representation;
@@ -79,5 +81,9 @@ public class HQLIdentifierExpression extends HQLExpression {
   @Override
   public String toString() {
     return this.representation;
+  }
+
+  public static boolean canRead(HQLExpression parent, HQLLexer lexer) {
+    return lexer.currentIs(HQLIdentifierToken.class);
   }
 }

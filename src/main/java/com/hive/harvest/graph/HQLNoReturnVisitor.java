@@ -4,7 +4,8 @@ import com.hive.harvest.parse.expressions.delimiters.HQLCommaExpression;
 import com.hive.harvest.parse.expressions.*;
 import com.hive.harvest.parse.expressions.columns.HQLColumnSetExpression;
 import com.hive.harvest.parse.expressions.columns.HQLNamedColumnExpression;
-import com.hive.harvest.parse.expressions.columns.HQLWildcardColumnExpression;
+import com.hive.harvest.parse.expressions.columns.HQLWildcardExpression;
+import com.hive.harvest.parse.expressions.delimiters.HQLDotExpression;
 import com.hive.harvest.parse.expressions.keywords.statements.HQLFromExpression;
 import com.hive.harvest.parse.expressions.keywords.statements.HQLSelectStatement;
 import com.hive.harvest.parse.expressions.primitive.HQLIdentifierExpression;
@@ -53,7 +54,7 @@ public abstract class HQLNoReturnVisitor {
     this.onvisited(expression);
   }
 
-  public void visit(HQLWildcardColumnExpression expression) {
+  public void visit(HQLWildcardExpression expression) {
     this.onvisited(expression);
   }
 
@@ -76,6 +77,10 @@ public abstract class HQLNoReturnVisitor {
   }
 
   public void visit(HQLCommaExpression expression) {
+    this.onvisited(expression);
+  }
+
+  public void visit(HQLDotExpression expression) {
     this.onvisited(expression);
   }
 }

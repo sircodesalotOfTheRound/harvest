@@ -12,6 +12,8 @@ public class HQLPunctuationToken extends HQLToken {
   public static final String OPEN_DIAMOND = "<";
   public static final String CLOSE_DIAMOND = ">";
   public static final String COLON = ":";
+  public static final String DOT = ".";
+  public static final String WILDCARD = "*";
 
   private final String token;
 

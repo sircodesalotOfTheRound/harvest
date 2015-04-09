@@ -116,7 +116,20 @@ public abstract class HQLCollection<T> implements Iterable<T> {
     }
   }
 
-  public int size() {
+  public T get(int at) {
+    if (this.items() instanceof List) {
+      return (T)((List<T>)this.items()).get(at);
+    } else {
+      Iterator<T> iterator = this.items().iterator();
+      for (int index = 0; index < (index - 1); index++) {
+        iterator.next();
+      }
+
+      return iterator.next();
+    }
+  }
+
+  public int count() {
     if (this.items() instanceof List) {
       return ((List)this.items()).size();
 
@@ -135,4 +148,5 @@ public abstract class HQLCollection<T> implements Iterable<T> {
   public Iterator<T> iterator() {
     return this.items().iterator();
   }
+
 }

@@ -11,17 +11,17 @@ import com.hive.harvest.tools.collections.HQLCollection;
 /**
  * Created by sircodesalot on 15/4/9.
  */
-public class HQLCommaExpression extends HQLExpression implements HQLDelimiterExpression {
-  private final HQLPunctuationToken comma;
+public class HQLDotExpression extends HQLExpression implements HQLDelimiterExpression {
+  private final HQLPunctuationToken dot;
 
-  public HQLCommaExpression(HQLExpression parent, HQLLexer lexer) {
+  public HQLDotExpression(HQLExpression parent, HQLLexer lexer) {
     super(parent, lexer);
 
-    this.comma = readComma(lexer);
+    this.dot = readComma(lexer);
   }
 
   private HQLPunctuationToken readComma(HQLLexer lexer) {
-    return lexer.readCurrentAndAdvance(HQLPunctuationToken.class, HQLPunctuationToken.COMMA);
+    return lexer.readCurrentAndAdvance(HQLPunctuationToken.class, HQLPunctuationToken.DOT);
   }
 
   @Override
@@ -35,10 +35,10 @@ public class HQLCommaExpression extends HQLExpression implements HQLDelimiterExp
   }
 
   public static boolean canRead(HQLExpression parent, HQLLexer lexer) {
-    return lexer.currentIs(HQLPunctuationToken.class, HQLPunctuationToken.COMMA);
+    return lexer.currentIs(HQLPunctuationToken.class, HQLPunctuationToken.DOT);
   }
 
-  public static HQLCommaExpression read(HQLExpression parent, HQLLexer lexer) {
-    return new HQLCommaExpression(parent, lexer);
+  public static HQLDotExpression read(HQLExpression parent, HQLLexer lexer) {
+    return new HQLDotExpression(parent, lexer);
   }
 }

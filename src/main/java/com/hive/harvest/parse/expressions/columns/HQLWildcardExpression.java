@@ -2,6 +2,7 @@ package com.hive.harvest.parse.expressions.columns;
 
 import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.expressions.HQLExpression;
+import com.hive.harvest.parse.expressions.categories.HQLMemberExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLPunctuationToken;
 import com.hive.harvest.parse.tokens.HQLToken;
@@ -10,11 +11,10 @@ import com.hive.harvest.tools.collections.HQLCollection;
 /**
  * Created by sircodesalot on 15/4/2.
  */
-public class HQLWildcardColumnExpression extends HQLColumnExpression {
-  public static String WILDCARD = "*";
+public class HQLWildcardExpression extends HQLColumnExpression implements HQLMemberExpression {
   public HQLToken token;
 
-  public HQLWildcardColumnExpression(HQLExpression parent, HQLLexer lexer) {
+  public HQLWildcardExpression(HQLExpression parent, HQLLexer lexer) {
     super(parent, lexer);
 
     this.token = readToken(lexer);
@@ -31,10 +31,15 @@ public class HQLWildcardColumnExpression extends HQLColumnExpression {
   }
 
   private HQLToken readToken(HQLLexer lexer) {
-    return lexer.readCurrentAndAdvance(HQLPunctuationToken.class, WILDCARD);
+    return lexer.readCurrentAndAdvance(HQLPunctuationToken.class, HQLPunctuationToken.WILDCARD);
   }
 
-  public static HQLWildcardColumnExpression read(HQLExpression parent, HQLLexer lexer) {
-    return new HQLWildcardColumnExpression(parent, lexer);
+  public static HQLWildcardExpression read(HQLExpression parent, HQLLexer lexer) {
+    return new HQLWildcardExpression(parent, lexer);
+  }
+
+  @Override
+  public String toString() {
+    return HQLPunctuationToken.WILDCARD;
   }
 }

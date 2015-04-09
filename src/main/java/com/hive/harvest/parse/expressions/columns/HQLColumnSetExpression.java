@@ -10,10 +10,6 @@ import com.hive.harvest.parse.tokens.HQLToken;
 import com.hive.harvest.tools.collections.HQLAppendableCollection;
 import com.hive.harvest.tools.collections.HQLCollection;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 /**
  * Created by sircodesalot on 15/4/2.
  */
@@ -56,7 +52,7 @@ public class HQLColumnSetExpression extends HQLExpression {
 
   public boolean containsWildcardColumn() {
     for (HQLExpression column : columns) {
-      if (column instanceof HQLWildcardColumnExpression) {
+      if (column instanceof HQLWildcardExpression) {
         return true;
       }
     }
