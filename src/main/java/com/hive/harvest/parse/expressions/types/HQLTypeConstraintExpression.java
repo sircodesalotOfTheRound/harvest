@@ -13,7 +13,6 @@ import com.hive.harvest.tools.collections.HQLCollection;
  */
 public class HQLTypeConstraintExpression extends HQLExpression {
   private final HQLIdentifierExpression type;
-  //private final HQLGenericParameterListExpression genericParameters;
   private final String representation;
   private final HQLCollection<HQLExpression> children;
 
@@ -21,7 +20,6 @@ public class HQLTypeConstraintExpression extends HQLExpression {
     super(parent, lexer);
 
     this.type = this.readType(lexer);
-    //this.genericParameters = readGenericParameters(lexer);
     this.representation = generateRepresentation();
     this.children = new HQLAppendableCollection<HQLExpression>(type);//, genericParameters);
   }
