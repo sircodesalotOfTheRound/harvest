@@ -30,7 +30,9 @@ public class HQLTreeWriter {
   }
 
   public void processExpression(HQLExpression expression) {
-    if (expression == null) return;
+    if (expression == null) {
+      return;
+    }
 
     this.display(expression);
 
