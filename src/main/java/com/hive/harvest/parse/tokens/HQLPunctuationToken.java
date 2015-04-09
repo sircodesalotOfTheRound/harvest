@@ -9,6 +9,9 @@ public class HQLPunctuationToken extends HQLToken {
   public static final String COMMA = ",";
   public static final String OPEN_PARENS = "(";
   public static final String CLOSE_PARENS = ")";
+  public static final String OPEN_DIAMOND = "<";
+  public static final String CLOSE_DIAMOND = ">";
+  public static final String COLON = ":";
 
   private final String token;
 

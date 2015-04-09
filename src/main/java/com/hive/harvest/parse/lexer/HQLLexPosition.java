@@ -25,4 +25,9 @@ public class HQLLexPosition {
   public int offset() {
     return this.offset;
   }
+
+  @Override
+  public String toString() {
+    return String.format("(%s:%s)", line, column);
+  }
 }

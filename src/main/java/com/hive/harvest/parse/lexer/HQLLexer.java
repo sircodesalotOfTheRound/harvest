@@ -84,7 +84,7 @@ public class HQLLexer {
     if (currentIs(type)) {
       return (T) readCurrentAndAdvance();
     } else {
-      throw new HQLException("Expected %s, found %s", type, this.current().getClass());
+      throw new HQLException("%s Expected '%s', found '%s'", this.position(), type, this.current().getClass());
     }
   }
 
@@ -92,9 +92,12 @@ public class HQLLexer {
     if (currentIsMatchCase(type, representation)) {
       return (T) readCurrentAndAdvance();
     } else {
-      throw new HQLException("Expected (%s : %s), found (%s : %s)",
-        representation, type,
-        this.current().toString(), this.current().getClass());
+      throw new HQLException("%s Expected ('%s' : %s), found ('%s' : %s)",
+        this.position(),
+        representation,
+        type,
+        this.current().toString(),
+        this.current().getClass().getSimpleName());
     }
   }
 
@@ -102,9 +105,12 @@ public class HQLLexer {
     if (currentIs(type, representation)) {
       return (T) readCurrentAndAdvance();
     } else {
-      throw new HQLException("Expected (%s : %s), found (%s : %s)",
-        representation, type,
-        this.current().toString(), this.current().getClass());
+      throw new HQLException("%s Expected ('%s' : %s), found ('%s' : %s)",
+        this.position(),
+        representation,
+        type,
+        this.current().toString(),
+        this.current().getClass().getSimpleName());
     }
   }
 
