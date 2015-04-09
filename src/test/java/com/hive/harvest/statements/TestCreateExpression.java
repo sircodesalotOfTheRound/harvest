@@ -5,6 +5,7 @@ import com.hive.harvest.parse.expressions.identifiers.HQLVariableExpression;
 import com.hive.harvest.parse.expressions.keywords.statements.create.HQLCreateTableExpression;
 import com.hive.harvest.parse.expressions.keywords.statements.create.HQLCreateTypedColumnExpression;
 import com.hive.harvest.parse.expressions.keywords.statements.create.tools.HQLEntityType;
+import com.hive.harvest.parse.expressions.primitive.HQLIdentifierExpression;
 import com.hive.harvest.parse.expressions.types.HQLTypeConstraintExpression;
 import com.hive.harvest.tools.collections.HQLCollection;
 import org.junit.Test;
@@ -54,10 +55,10 @@ public class TestCreateExpression {
     HQLCollection<HQLCreateTypedColumnExpression> entries = statement.columnGroup().entries();
 
     assert (entries.first().identifier().toString().equals("first"));
-    assert (entries.first().typeConstraint().type().equals("INT"));
+    assert (entries.first().typeConstraint().type().toString().equals("INT"));
 
     assert (entries.second().identifier().toString().equals("second"));
-    assert (entries.second().typeConstraint().type().equals("STRING"));
+    assert (entries.second().typeConstraint().type().toString().equals("STRING"));
   }
 
 
@@ -83,12 +84,12 @@ public class TestCreateExpression {
 
     HQLCreateTableExpression statement = command.tree().expressions().firstAs(HQLCreateTableExpression.class);
     HQLCreateTypedColumnExpression column = statement.columnGroup().entries().first();
-    HQLTypeConstraintExpression constraint = column.typeConstraint();
+    HQLIdentifierExpression constraint = column.typeConstraint().type();
 
     assert (statement.identifier().toString().equals("struct_table"));
 
     assert (column.identifier().toString().equals("structure"));
-    assert (constraint.hasGenericParameters());
+    assert (constraint.hasGenericParamters());
     assert (constraint.toString().equals("STRUCT<one:STRING, two:MAP<INT, ARRAY<TIMESTAMP>>>"));
 
     assert (constraint.genericParameters().parameters().first().toString().equals("one:STRING"));
@@ -101,7 +102,7 @@ public class TestCreateExpression {
     assert (constraint.genericParameters().parameters().second().identifier().toString().equals("two"));
     assert (constraint.genericParameters().parameters().second().typeConstraint().toString().equals("MAP<INT, ARRAY<TIMESTAMP>>"));
 
-    HQLTypeConstraintExpression secondTypeConstraint = constraint.genericParameters().parameters().second().typeConstraint();
+    HQLIdentifierExpression secondTypeConstraint = constraint.genericParameters().parameters().second().typeConstraint().type();
     assert (secondTypeConstraint.genericParameters().parameters().second().identifier().toString().equals("ARRAY<TIMESTAMP>"));
     assert(secondTypeConstraint.genericParameters().parameters().second().identifier()
       .genericParameters().parameters().first().toString().equals("TIMESTAMP"));
