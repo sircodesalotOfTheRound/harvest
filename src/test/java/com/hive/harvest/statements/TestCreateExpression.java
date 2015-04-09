@@ -1,10 +1,9 @@
 package com.hive.harvest.statements;
 
 import com.hive.harvest.command.HQLCommand;
-import com.hive.harvest.parse.expressions.categories.HQLMemberExpression;
 import com.hive.harvest.parse.expressions.identifiers.HQLVariableExpression;
 import com.hive.harvest.parse.expressions.keywords.statements.create.HQLCreateTableExpression;
-import com.hive.harvest.parse.expressions.keywords.statements.create.HQLTypedExpression;
+import com.hive.harvest.parse.expressions.keywords.statements.create.HQLCreateTypedColumnExpression;
 import com.hive.harvest.parse.expressions.keywords.statements.create.tools.HQLEntityType;
 import com.hive.harvest.parse.expressions.types.HQLTypeConstraintExpression;
 import com.hive.harvest.tools.collections.HQLCollection;
@@ -39,10 +38,20 @@ public class TestCreateExpression {
   }
 
   @Test
+  public void testCreateTableWithCommentedParameter() {
+    HQLCommand command = new HQLCommand("create table commented_table (paramter INT COMMENT 'the quick brown fox')");
+    HQLCreateTableExpression statement = command.tree().expressions().firstAs(HQLCreateTableExpression.class);
+
+    assert (statement.entityType() == HQLEntityType.TABLE);
+    assert (statement.identifier().toString().equals("commented_table"));
+    assert (statement.columnGroup().entries().first().commentInfo().commentString().toString().equals("the quick brown fox"));
+  }
+
+  @Test
   public void testCreateExpressionWithParameters() {
     HQLCommand command = new HQLCommand("create table my_table (first INT, second STRING)");
     HQLCreateTableExpression statement = command.tree().expressions().firstAs(HQLCreateTableExpression.class);
-    HQLCollection<HQLTypedExpression> entries = statement.columnGroup().entries();
+    HQLCollection<HQLCreateTypedColumnExpression> entries = statement.columnGroup().entries();
 
     assert (entries.first().identifier().toString().equals("first"));
     assert (entries.first().typeConstraint().type().equals("INT"));
@@ -57,7 +66,7 @@ public class TestCreateExpression {
     HQLCommand command = new HQLCommand("create table constrained_table (first MAP<INT, STRING>, second ARRAY<INT>)");
 
     HQLCreateTableExpression statement = command.tree().expressions().firstAs(HQLCreateTableExpression.class);
-    HQLCollection<HQLTypedExpression> entries = statement.columnGroup().entries();
+    HQLCollection<HQLCreateTypedColumnExpression> entries = statement.columnGroup().entries();
 
     assert (statement.identifier().toString().equals("constrained_table"));
 
@@ -73,7 +82,7 @@ public class TestCreateExpression {
     HQLCommand command = new HQLCommand("create table struct_table (structure STRUCT<one:STRING, two:MAP<INT, ARRAY<TIMESTAMP>>>)");
 
     HQLCreateTableExpression statement = command.tree().expressions().firstAs(HQLCreateTableExpression.class);
-    HQLTypedExpression column = statement.columnGroup().entries().first();
+    HQLCreateTypedColumnExpression column = statement.columnGroup().entries().first();
     HQLTypeConstraintExpression constraint = column.typeConstraint();
 
     assert (statement.identifier().toString().equals("struct_table"));

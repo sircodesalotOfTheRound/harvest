@@ -11,24 +11,34 @@ import com.hive.harvest.tools.collections.HQLCollection;
 /**
  * Created by sircodesalot on 15/4/9.
  */
-public class HQLTypedExpression extends HQLExpression {
+public class HQLCreateTypedColumnExpression extends HQLExpression {
   private final HQLIdentifierToken identifier;
   private final HQLTypeConstraintExpression type;
+  private final HQLColumnCommentExpression comment;
 
-  public HQLTypedExpression(HQLExpression parent, HQLLexer lexer) {
+  public HQLCreateTypedColumnExpression(HQLExpression parent, HQLLexer lexer) {
     super(parent, lexer);
 
     this.identifier = readIdentifier(lexer);
     this.type = readType(lexer);
+    this.comment = readComment(lexer);
   }
+
 
   private HQLIdentifierToken readIdentifier(HQLLexer lexer) {
     return lexer.readCurrentAndAdvance(HQLIdentifierToken.class);
   }
 
-
   private HQLTypeConstraintExpression readType(HQLLexer lexer) {
     return HQLTypeConstraintExpression.read(this, lexer);
+  }
+
+  private HQLColumnCommentExpression readComment(HQLLexer lexer) {
+    if (HQLColumnCommentExpression.canRead(this, lexer)) {
+      return HQLColumnCommentExpression.read(this, lexer);
+    } else {
+      return null;
+    }
   }
 
   public HQLIdentifierToken identifier() {
@@ -37,6 +47,10 @@ public class HQLTypedExpression extends HQLExpression {
 
   public HQLTypeConstraintExpression typeConstraint() {
     return this.type;
+  }
+
+  public HQLColumnCommentExpression commentInfo() {
+    return this.comment;
   }
 
   @Override
@@ -49,8 +63,8 @@ public class HQLTypedExpression extends HQLExpression {
     return null;
   }
 
-  public static HQLTypedExpression read(HQLExpression parent, HQLLexer lexer) {
-    return new HQLTypedExpression(parent, lexer);
+  public static HQLCreateTypedColumnExpression read(HQLExpression parent, HQLLexer lexer) {
+    return new HQLCreateTypedColumnExpression(parent, lexer);
   }
 
   public static boolean canRead(HQLExpression parent, HQLLexer lexer) {

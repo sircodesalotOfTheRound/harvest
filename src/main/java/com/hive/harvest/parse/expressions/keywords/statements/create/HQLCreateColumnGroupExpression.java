@@ -13,7 +13,7 @@ import com.hive.harvest.tools.collections.HQLCollection;
  * Created by sircodesalot on 15/4/9.
  */
 public class HQLCreateColumnGroupExpression extends HQLExpression {
-  private final HQLCollection<HQLTypedExpression> entries;
+  private final HQLCollection<HQLCreateTypedColumnExpression> entries;
 
   public HQLCreateColumnGroupExpression(HQLExpression parent, HQLLexer lexer) {
     super(parent, lexer);
@@ -21,13 +21,13 @@ public class HQLCreateColumnGroupExpression extends HQLExpression {
     this.entries = readEntries(lexer);
   }
 
-  private HQLAppendableCollection<HQLTypedExpression> readEntries(HQLLexer lexer) {
-    HQLAppendableCollection<HQLTypedExpression> items = new HQLAppendableCollection<HQLTypedExpression>();
+  private HQLAppendableCollection<HQLCreateTypedColumnExpression> readEntries(HQLLexer lexer) {
+    HQLAppendableCollection<HQLCreateTypedColumnExpression> items = new HQLAppendableCollection<HQLCreateTypedColumnExpression>();
 
     lexer.readCurrentAndAdvance(HQLPunctuationToken.class, HQLPunctuationToken.OPEN_PARENS);
     while (!lexer.isEof()) {
-      if (HQLTypedExpression.canRead(this, lexer)) {
-        items.add(HQLTypedExpression.read(this, lexer));
+      if (HQLCreateTypedColumnExpression.canRead(this, lexer)) {
+        items.add(HQLCreateTypedColumnExpression.read(this, lexer));
       } else {
         break;
       }
@@ -43,7 +43,7 @@ public class HQLCreateColumnGroupExpression extends HQLExpression {
     return items;
   }
 
-  public HQLCollection<HQLTypedExpression> entries() {
+  public HQLCollection<HQLCreateTypedColumnExpression> entries() {
     return this.entries;
   }
 
