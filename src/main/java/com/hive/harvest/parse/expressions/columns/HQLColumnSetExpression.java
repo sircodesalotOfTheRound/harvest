@@ -28,7 +28,7 @@ public class HQLColumnSetExpression extends HQLExpression {
 
   @Override
   public HQLCollection<HQLExpression> children() {
-    return null;
+    return this.columns.castTo(HQLExpression.class);
   }
 
   private HQLCollection<HQLColumnExpression> readColumns(HQLLexer lexer) {

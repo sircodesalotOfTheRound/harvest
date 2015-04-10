@@ -37,6 +37,9 @@ public class HQLTreeWriter {
     this.display(expression);
 
     this.increateIndent();
+    if (expression.children() == null) {
+      System.out.println(expression.getClass());
+    }
     for (HQLExpression child : expression.children()) {
       processExpression(child);
     }

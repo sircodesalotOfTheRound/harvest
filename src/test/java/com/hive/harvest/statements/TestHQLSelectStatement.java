@@ -36,7 +36,7 @@ public class TestHQLSelectStatement {
       .all(new Predicate<HQLNamedColumnExpression>() {
         @Override
         public boolean test(HQLNamedColumnExpression column) {
-          return columnNames.contains(column.identifier());
+          return columnNames.contains(column.identifier().toString());
         }
       });
 

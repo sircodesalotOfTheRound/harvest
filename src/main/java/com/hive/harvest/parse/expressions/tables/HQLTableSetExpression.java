@@ -12,6 +12,7 @@ import com.hive.harvest.tools.collections.HQLCollection;
  * Created by sircodesalot on 15/4/2.
  */
 public class HQLTableSetExpression extends HQLExpression {
+  private static final String TABLE_SET = "(TABLES)";
   private final HQLCollection<HQLTableExpression> tables;
 
   public HQLTableSetExpression(HQLExpression parent, HQLLexer lexer) {
@@ -27,7 +28,7 @@ public class HQLTableSetExpression extends HQLExpression {
 
   @Override
   public HQLCollection<HQLExpression> children() {
-    return null;
+    return tables.castTo(HQLExpression.class);
   }
 
   private HQLCollection<HQLTableExpression> readTables(HQLLexer lexer) {
@@ -62,5 +63,10 @@ public class HQLTableSetExpression extends HQLExpression {
 
   public static HQLTableSetExpression read(HQLExpression parent, HQLLexer lexer) {
     return new HQLTableSetExpression(parent, lexer);
+  }
+
+  @Override
+  public String toString() {
+    return TABLE_SET;
   }
 }

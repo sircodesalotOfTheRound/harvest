@@ -21,19 +21,11 @@ public class HQLTypeConstraintExpression extends HQLExpression {
 
     this.type = this.readType(lexer);
     this.representation = generateRepresentation();
-    this.children = new HQLAppendableCollection<HQLExpression>(type);//, genericParameters);
+    this.children = new HQLAppendableCollection<HQLExpression>(type);
   }
 
   private HQLIdentifierExpression readType(HQLLexer lexer) {
     return HQLIdentifierExpression.read(this, lexer);
-  }
-
-  private HQLGenericParameterListExpression readGenericParameters(HQLLexer lexer) {
-    if (HQLGenericParameterListExpression.canRead(this, lexer)) {
-      return HQLGenericParameterListExpression.read(this, lexer);
-    } else {
-      return null;
-    }
   }
 
   private String generateRepresentation() {

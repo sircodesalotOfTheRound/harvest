@@ -3,15 +3,17 @@ package com.hive.harvest.parse.expressions.columns;
 import com.hive.harvest.exceptions.HQLException;
 import com.hive.harvest.graph.HQLNoReturnVisitor;
 import com.hive.harvest.parse.expressions.HQLExpression;
+import com.hive.harvest.parse.expressions.primitive.HQLIdentifierExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.tokens.HQLIdentifierToken;
+import com.hive.harvest.tools.collections.HQLAppendableCollection;
 import com.hive.harvest.tools.collections.HQLCollection;
 
 /**
  * Created by sircodesalot on 15/4/3.
  */
 public class HQLNamedColumnExpression extends HQLColumnExpression {
-  private final HQLIdentifierToken identifier;
+  private final HQLIdentifierExpression identifier;
 
   public HQLNamedColumnExpression(HQLExpression parent, HQLLexer lexer) {
     super(parent, lexer);
@@ -26,23 +28,23 @@ public class HQLNamedColumnExpression extends HQLColumnExpression {
 
   @Override
   public HQLCollection<HQLExpression> children() {
-    return null;
+    return new HQLAppendableCollection<HQLExpression>(identifier);
   }
 
-  private HQLIdentifierToken readIdentifier(HQLLexer lexer) {
+  private HQLIdentifierExpression readIdentifier(HQLLexer lexer) {
     if (!lexer.currentIs(HQLIdentifierToken.class)) {
       throw new HQLException("Identifier Expressions must be located on identifiers");
     }
 
-    return (HQLIdentifierToken) lexer.readCurrentAndAdvance(HQLIdentifierToken.class);
+    return HQLIdentifierExpression.read(this, lexer);
   }
 
   public static HQLColumnExpression read(HQLExpression parent, HQLLexer lexer) {
     return new HQLNamedColumnExpression(parent, lexer);
   }
 
-  public String identifier() {
-    return identifier.identifier();
+  public HQLIdentifierExpression identifier() {
+    return identifier;
   }
 
   @Override

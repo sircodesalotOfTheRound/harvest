@@ -6,6 +6,7 @@ import com.hive.harvest.parse.expressions.categories.HQLStatementExpression;
 import com.hive.harvest.parse.expressions.keywords.HQLKeywordExpression;
 import com.hive.harvest.parse.lexer.HQLLexer;
 import com.hive.harvest.parse.expressions.columns.HQLColumnSetExpression;
+import com.hive.harvest.tools.collections.HQLAppendableCollection;
 import com.hive.harvest.tools.collections.HQLCollection;
 
 /**
@@ -29,7 +30,7 @@ public class HQLSelectStatement extends HQLKeywordExpression implements HQLState
 
   @Override
   public HQLCollection<HQLExpression> children() {
-    return null;
+    return new HQLAppendableCollection<HQLExpression>(columns, from);
   }
 
   private HQLColumnSetExpression readColumns(HQLLexer lexer) {
